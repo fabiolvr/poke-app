@@ -1,25 +1,21 @@
-import { Host, List, ListItem, Text } from '@expo/ui';
-import { useCallback, useMemo } from 'react';
-import { StyleSheet } from 'react-native';
+import { useCallback, useMemo, useState } from 'react';
+import { ActivityIndicator, RefreshControl, StyleSheet } from 'react-native';
 
-import { PokemonRow } from '@/components/pokemon-row';
+import { PokemonGrid } from '@/components/pokemon-grid';
 import { ScreenMessage } from '@/components/screen-message';
+import { useBrutalTheme } from '@/constants/brutal';
 import { useGetPokemonListInfiniteQuery } from '@/features/pokemon/pokemon-api';
 import { toSummary } from '@/features/pokemon/pokemon-utils';
-import type { PokemonSummary } from '@/features/pokemon/types';
 
 export default function PokedexScreen() {
+  const theme = useBrutalTheme();
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const { data, isLoading, isError, refetch, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useGetPokemonListInfiniteQuery();
 
   const pokemons = useMemo(
     () => data?.pages.flatMap((page) => page.results.map(toSummary)) ?? [],
     [data],
-  );
-
-  const renderRow = useCallback(
-    ({ item }: { item: PokemonSummary }) => <PokemonRow pokemon={item} />,
-    [],
   );
 
   const loadMore = useCallback(() => {
@@ -29,7 +25,12 @@ export default function PokedexScreen() {
   }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
   const handleRefresh = useCallback(async () => {
-    await refetch();
+    setIsRefreshing(true);
+    try {
+      await refetch();
+    } finally {
+      setIsRefreshing(false);
+    }
   }, [refetch]);
 
   if (isLoading) {
@@ -39,6 +40,7 @@ export default function PokedexScreen() {
   if (isError) {
     return (
       <ScreenMessage
+        tone="error"
         text="Não foi possível carregar a Pokédex. Confira sua conexão."
         actionLabel="Tentar de novo"
         onAction={refetch}
@@ -47,22 +49,25 @@ export default function PokedexScreen() {
   }
 
   return (
-    <Host style={styles.host}>
-      <List onRefresh={handleRefresh}>
-        <List.ForEach data={pokemons} keyExtractor={(pokemon) => pokemon.name}>
-          {renderRow}
-        </List.ForEach>
-        {hasNextPage ? (
-          <ListItem>
-            {/* Quando esta linha aparece na tela, buscamos a próxima página. */}
-            <Text onAppear={loadMore}>{isFetchingNextPage ? 'Carregando mais…' : ' '}</Text>
-          </ListItem>
-        ) : null}
-      </List>
-    </Host>
+    <PokemonGrid
+      data={pokemons}
+      onEndReached={loadMore}
+      refreshControl={
+        <RefreshControl
+          refreshing={isRefreshing}
+          onRefresh={handleRefresh}
+          tintColor={theme.line}
+        />
+      }
+      ListFooterComponent={
+        isFetchingNextPage ? (
+          <ActivityIndicator color={theme.line} style={styles.footer} />
+        ) : undefined
+      }
+    />
   );
 }
 
 const styles = StyleSheet.create({
-  host: { flex: 1 },
+  footer: { paddingVertical: 16 },
 });

@@ -1,9 +1,11 @@
-import { Host, List, ListItem, Picker, Text } from '@expo/ui';
-import { useCallback, useMemo, useState } from 'react';
-import { StyleSheet } from 'react-native';
+import { router } from 'expo-router';
+import { useMemo, useState } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 
-import { PokemonRow } from '@/components/pokemon-row';
+import { BrutalButton } from '@/components/brutal-button';
+import { PokemonGrid } from '@/components/pokemon-grid';
 import { ScreenMessage } from '@/components/screen-message';
+import { Brutal, useBrutalTheme } from '@/constants/brutal';
 import { selectFavorites } from '@/features/favorites/favorites-slice';
 import type { PokemonSummary } from '@/features/pokemon/types';
 import { useAppSelector } from '@/store/hooks';
@@ -16,42 +18,51 @@ const SORTERS: Record<SortOrder, (a: PokemonSummary, b: PokemonSummary) => numbe
 };
 
 export default function FavoritesScreen() {
+  const theme = useBrutalTheme();
   const favorites = useAppSelector(selectFavorites);
   const [order, setOrder] = useState<SortOrder>('number');
 
   const sorted = useMemo(() => [...favorites].sort(SORTERS[order]), [favorites, order]);
 
-  const renderRow = useCallback(
-    ({ item }: { item: PokemonSummary }) => <PokemonRow pokemon={item} />,
-    [],
-  );
-
   if (favorites.length === 0) {
     return (
-      <ScreenMessage text="Nenhum favorito ainda. Abra um Pokémon na Pokédex e toque em Favoritar." />
+      <ScreenMessage
+        tone="empty"
+        text="Nenhum favorito ainda. Abra um Pokémon na Pokédex e toque em Favoritar."
+        actionLabel="Abrir a Pokédex"
+        onAction={() => router.navigate('/')}
+      />
     );
   }
 
   return (
-    <Host style={styles.host}>
-      <List>
-        <ListItem
-          trailing={
-            <Picker selectedValue={order} onValueChange={(value) => setOrder(value as SortOrder)}>
-              <Picker.Item label="Número" value="number" />
-              <Picker.Item label="Nome" value="name" />
-            </Picker>
-          }>
-          <Text>Ordenar por</Text>
-        </ListItem>
-        <List.ForEach data={sorted} keyExtractor={(pokemon) => pokemon.name}>
-          {renderRow}
-        </List.ForEach>
-      </List>
-    </Host>
+    <PokemonGrid
+      data={sorted}
+      ListHeaderComponent={
+        <View style={styles.sort}>
+          <Text style={[styles.sortLabel, { color: theme.text }]}>ORDENAR POR</Text>
+          <View style={styles.sortButtons}>
+            <BrutalButton
+              label="Número"
+              selected={order === 'number'}
+              color={order === 'number' ? theme.yellow : theme.white}
+              onPress={() => setOrder('number')}
+            />
+            <BrutalButton
+              label="Nome"
+              selected={order === 'name'}
+              color={order === 'name' ? theme.yellow : theme.white}
+              onPress={() => setOrder('name')}
+            />
+          </View>
+        </View>
+      }
+    />
   );
 }
 
 const styles = StyleSheet.create({
-  host: { flex: 1 },
+  sort: { gap: 10 },
+  sortLabel: { fontFamily: Brutal.font.bold, fontSize: 12, letterSpacing: 1 },
+  sortButtons: { flexDirection: 'row', gap: 12 },
 });
