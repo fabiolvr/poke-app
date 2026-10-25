@@ -1,4 +1,5 @@
 import { router } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
 
 import { BrutalBox } from '@/components/brutal-box';
@@ -6,6 +7,7 @@ import { PokemonImage } from '@/components/pokemon-image';
 import { Brutal, useBrutalTheme } from '@/constants/brutal';
 import { artworkUrl, formLabel, idFromUrl } from '@/features/pokemon/pokemon-utils';
 import type { PokemonSpecies } from '@/features/pokemon/types';
+import { useLanguage } from '@/hooks/use-language';
 
 const COLUMNS = 3;
 const CARD_GAP = 12;
@@ -18,6 +20,8 @@ type Props = {
 // Outras variedades da mesma espécie: megas, formas regionais, Gigantamax…
 export function PokemonForms({ species, currentName }: Props) {
   const theme = useBrutalTheme();
+  const { t } = useTranslation();
+  const language = useLanguage();
   const { width } = useWindowDimensions();
   const others = species.varieties.filter((variety) => variety.pokemon.name !== currentName);
 
@@ -31,16 +35,16 @@ export function PokemonForms({ species, currentName }: Props) {
 
   return (
     <View style={styles.container}>
-      <Text style={[styles.title, { color: theme.text }]}>FORMAS</Text>
+      <Text style={[styles.title, { color: theme.text }]}>{t('forms.title')}</Text>
       <View style={styles.row}>
         {others.map(({ pokemon }) => {
-          const label = formLabel(pokemon.name, species.name);
+          const label = formLabel(pokemon.name, species.name, language);
           return (
             <Pressable
               key={pokemon.name}
               style={{ width: cardWidth }}
               accessibilityRole="button"
-              accessibilityLabel={`Forma ${label}`}
+              accessibilityLabel={t('forms.label', { form: label })}
               onPress={() =>
                 router.push({ pathname: '/pokemon/[name]', params: { name: pokemon.name } })
               }>

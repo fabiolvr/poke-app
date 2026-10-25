@@ -1,4 +1,5 @@
 import { useCallback, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -19,6 +20,7 @@ type Props = {
 
 export function OpponentPicker({ exclude, onPick }: Props) {
   const theme = useBrutalTheme();
+  const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const [query, setQuery] = useState('');
   const { data, isLoading, isError, refetch } = useGetAllPokemonQuery();
@@ -38,15 +40,15 @@ export function OpponentPicker({ exclude, onPick }: Props) {
 
   const renderList = () => {
     if (isLoading) {
-      return <ScreenMessage inline text="Carregando a lista…" />;
+      return <ScreenMessage inline text={t('compare.listLoading')} />;
     }
     if (isError) {
       return (
         <ScreenMessage
           inline
           tone="error"
-          text="Não foi possível carregar a lista."
-          actionLabel="Tentar de novo"
+          text={t('compare.listError')}
+          actionLabel={t('common.retry')}
           onAction={refetch}
         />
       );
@@ -67,9 +69,9 @@ export function OpponentPicker({ exclude, onPick }: Props) {
     <BrutalScreen>
       <View style={styles.controls}>
         <Text style={[styles.title, { color: theme.text }]}>
-          {`QUEM ENFRENTA ${exclude.toUpperCase()}?`}
+          {t('compare.pickTitle', { name: exclude.toUpperCase() })}
         </Text>
-        <SearchBar value={query} onChangeText={setQuery} placeholder="Buscar adversário" />
+        <SearchBar value={query} onChangeText={setQuery} placeholder={t('compare.search')} />
       </View>
       {renderList()}
     </BrutalScreen>
@@ -83,12 +85,13 @@ type RowProps = {
 
 function OpponentRow({ pokemon, onPress }: RowProps) {
   const theme = useBrutalTheme();
+  const { t } = useTranslation();
   const name = capitalize(pokemon.name);
 
   return (
     <Pressable
       accessibilityRole="button"
-      accessibilityLabel={`${name}, número ${pokemon.id}`}
+      accessibilityLabel={t('card.species', { name, number: pokemon.id })}
       onPress={onPress}>
       {({ pressed }) => (
         <BrutalBox pressed={pressed} style={styles.row}>

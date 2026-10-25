@@ -1,5 +1,6 @@
 import type { TabListProps, TabTriggerSlotProps } from 'expo-router/ui';
 import { SymbolView, type SymbolViewProps } from 'expo-symbols';
+import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -13,17 +14,13 @@ import { useIsOffline } from '@/hooks/use-is-offline';
 export function BrutalTabList({ children, ...props }: TabListProps) {
   const insets = useSafeAreaInsets();
   const theme = useBrutalTheme();
+  const { t } = useTranslation();
   const isOffline = useIsOffline();
 
   return (
     <View {...props} style={[styles.container, { bottom: insets.bottom + 8 }]}>
       {isOffline ? (
-        <Sticker
-          label="Sem internet · mostrando o que está salvo"
-          color={theme.red}
-          tilt={-2}
-          style={styles.offline}
-        />
+        <Sticker label={t('tabs.offline')} color={theme.red} tilt={-2} style={styles.offline} />
       ) : null}
       <BrutalBox style={styles.bar}>{children}</BrutalBox>
     </View>

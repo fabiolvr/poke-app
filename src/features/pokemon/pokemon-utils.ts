@@ -1,3 +1,6 @@
+import type { Language } from '@/i18n/language';
+
+import { itemName, triggerName, word } from './translations';
 import type {
   ChainLink,
   EvolutionDetail,
@@ -7,22 +10,12 @@ import type {
   PokemonSpecies,
   PokemonSummary,
 } from './types';
-import { itemName, triggerName } from './translations';
 
 // Megas, formas regionais e afins têm id acima de 10000 e ficam fora da Pokédex.
 const FIRST_ALTERNATE_FORM_ID = 10000;
 
 const ARTWORK_URL =
   'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork';
-
-export const STAT_LABELS: Record<string, string> = {
-  hp: 'PS',
-  attack: 'Ataque',
-  defense: 'Defesa',
-  'special-attack': 'Ataque Esp.',
-  'special-defense': 'Defesa Esp.',
-  speed: 'Velocidade',
-};
 
 export function artworkUrl(id: number) {
   return `${ARTWORK_URL}/${id}.png`;
@@ -60,14 +53,14 @@ export function formatName(pokemon: Pick<PokemonSummary, 'id' | 'name'>) {
 }
 
 // Número da Pokédex para espécies; formas não têm número próprio.
-export function dexLabel(pokemon: Pick<PokemonSummary, 'id'>) {
-  return isDexEntry(pokemon) ? formatDexNumber(pokemon.id) : 'Forma';
+export function dexLabel(pokemon: Pick<PokemonSummary, 'id'>, language: Language) {
+  return isDexEntry(pokemon) ? formatDexNumber(pokemon.id) : word('form', language);
 }
 
 // Rótulo curto de uma variedade dentro da espécie: "charizard-mega-x" → "Mega X".
-export function formLabel(varietyName: string, speciesName: string) {
+export function formLabel(varietyName: string, speciesName: string, language: Language) {
   if (varietyName === speciesName) {
-    return 'Padrão';
+    return word('defaultForm', language);
   }
   const prefix = `${speciesName}-`;
   return formatWords(
@@ -81,23 +74,23 @@ export function matchesQuery(pokemon: PokemonSummary, query: string) {
   return normalized === '' || pokemon.name.includes(normalized);
 }
 
-export function describeEvolution(detail: EvolutionDetail | undefined) {
+export function describeEvolution(detail: EvolutionDetail | undefined, language: Language) {
   if (!detail) {
     return '';
   }
   if (detail.min_level) {
-    return `Nv. ${detail.min_level}`;
+    return `${word('level', language)} ${detail.min_level}`;
   }
   if (detail.item) {
-    return itemName(detail.item.name);
+    return itemName(detail.item.name, language);
   }
   if (detail.trigger.name === 'trade') {
-    return 'Troca';
+    return word('trade', language);
   }
   if (detail.min_happiness) {
-    return 'Amizade';
+    return word('friendship', language);
   }
-  return triggerName(detail.trigger.name);
+  return triggerName(detail.trigger.name, language);
 }
 
 // Achata a árvore da API em estágios: [[Eevee], [Vaporeon, Jolteon, …]].
@@ -107,7 +100,7 @@ export function flattenChain(root: ChainLink): EvolutionStep[][] {
     stages[depth] ??= [];
     stages[depth].push({
       pokemon: toSummary(link.species),
-      how: describeEvolution(link.evolution_details[0]),
+      detail: link.evolution_details[0],
     });
     link.evolves_to.forEach((next) => visit(next, depth + 1));
   };

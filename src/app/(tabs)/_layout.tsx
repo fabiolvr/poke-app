@@ -1,9 +1,12 @@
 import { TabList, Tabs, TabSlot, TabTrigger } from 'expo-router/ui';
+import { useTranslation } from 'react-i18next';
 import { StyleSheet } from 'react-native';
 
 import { BrutalTabButton, BrutalTabList } from '@/components/brutal-tabs';
 
 export default function TabsLayout() {
+  const { t } = useTranslation();
+
   return (
     <Tabs>
       <TabSlot style={styles.slot} />
@@ -11,13 +14,13 @@ export default function TabsLayout() {
         <BrutalTabList>
           <TabTrigger name="(pokedex)" href="/" asChild>
             <BrutalTabButton
-              label="Pokédex"
+              label={t('tabs.pokedex')}
               icon={{ ios: 'square.grid.2x2.fill', android: 'grid_view', web: 'grid_view' }}
             />
           </TabTrigger>
           <TabTrigger name="favorites" href="/favorites" asChild>
             <BrutalTabButton
-              label="Favoritos"
+              label={t('tabs.favorites')}
               icon={{ ios: 'heart.fill', android: 'favorite', web: 'favorite' }}
             />
           </TabTrigger>

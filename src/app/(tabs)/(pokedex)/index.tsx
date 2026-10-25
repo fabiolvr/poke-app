@@ -1,4 +1,5 @@
 import { useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ActivityIndicator, Pressable, RefreshControl, StyleSheet, Text, View } from 'react-native';
 
 import { BrutalButton } from '@/components/brutal-button';
@@ -12,10 +13,13 @@ import { Brutal, useBrutalTheme } from '@/constants/brutal';
 import { typeName } from '@/features/pokemon/translations';
 import { usePokedexSource } from '@/features/pokemon/use-pokedex-source';
 import { useIsOffline } from '@/hooks/use-is-offline';
+import { useLanguage } from '@/hooks/use-language';
 
 export default function PokedexScreen() {
   const theme = useBrutalTheme();
   const isOffline = useIsOffline();
+  const { t } = useTranslation();
+  const language = useLanguage();
   const [query, setQuery] = useState('');
   const [type, setType] = useState<string | null>(null);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -39,19 +43,15 @@ export default function PokedexScreen() {
 
   const renderContent = () => {
     if (isLoading) {
-      return <ScreenMessage inline text="Carregando a Pokédex…" />;
+      return <ScreenMessage inline text={t('pokedex.loading')} />;
     }
     if (isError) {
       return (
         <ScreenMessage
           inline
           tone="error"
-          text={
-            isOffline
-              ? 'Sem internet, e esta lista ainda não foi aberta neste aparelho.'
-              : 'Não foi possível carregar a Pokédex. Confira sua conexão.'
-          }
-          actionLabel="Tentar de novo"
+          text={isOffline ? t('pokedex.offlineError') : t('pokedex.error')}
+          actionLabel={t('common.retry')}
           onAction={refetch}
         />
       );
@@ -71,7 +71,9 @@ export default function PokedexScreen() {
         }
         ListEmptyComponent={
           <Text style={[styles.empty, { color: theme.text }]}>
-            Nenhum Pokémon com “{query.trim()}”{type ? ` do tipo ${typeName(type)}` : ''}.
+            {type
+              ? t('pokedex.emptyWithType', { query: query.trim(), type: typeName(type, language) })
+              : t('pokedex.empty', { query: query.trim() })}
           </Text>
         }
         ListFooterComponent={
@@ -86,12 +88,12 @@ export default function PokedexScreen() {
   return (
     <BrutalScreen>
       <View style={styles.controls}>
-        <SearchBar value={query} onChangeText={setQuery} placeholder="Buscar por nome" />
+        <SearchBar value={query} onChangeText={setQuery} placeholder={t('pokedex.search')} />
         <View style={styles.filterRow}>
           {type ? (
             <Pressable
               accessibilityRole="button"
-              accessibilityLabel={`Remover filtro ${typeName(type)}`}
+              accessibilityLabel={t('pokedex.removeFilter', { type: typeName(type, language) })}
               onPress={() => setType(null)}
               style={styles.activeType}>
               <TypeBadge type={type} />
@@ -99,7 +101,7 @@ export default function PokedexScreen() {
             </Pressable>
           ) : null}
           <BrutalButton
-            label={type ? 'Trocar tipo' : 'Filtrar por tipo'}
+            label={type ? t('pokedex.changeType') : t('pokedex.filter')}
             color={theme.blue}
             onPress={() => setIsFilterOpen(true)}
           />

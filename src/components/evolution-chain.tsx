@@ -1,4 +1,5 @@
 import { router } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
 
 import { PokemonImage } from '@/components/pokemon-image';
@@ -6,8 +7,9 @@ import { BrutalBox } from '@/components/brutal-box';
 import { Sticker } from '@/components/sticker';
 import { Brutal, useBrutalTheme } from '@/constants/brutal';
 import { useGetEvolutionChainQuery } from '@/features/pokemon/pokemon-api';
-import { capitalize } from '@/features/pokemon/pokemon-utils';
+import { capitalize, describeEvolution } from '@/features/pokemon/pokemon-utils';
 import type { EvolutionStep } from '@/features/pokemon/types';
+import { useLanguage } from '@/hooks/use-language';
 
 const COLUMNS = 3;
 const CARD_GAP = 12;
@@ -19,6 +21,7 @@ type Props = {
 
 export function EvolutionChain({ chainId, currentId }: Props) {
   const theme = useBrutalTheme();
+  const { t } = useTranslation();
   const { width } = useWindowDimensions();
   const { data: stages } = useGetEvolutionChainQuery(chainId);
 
@@ -32,9 +35,9 @@ export function EvolutionChain({ chainId, currentId }: Props) {
 
   return (
     <View style={styles.container}>
-      <Text style={[styles.title, { color: theme.text }]}>EVOLUÇÕES</Text>
+      <Text style={[styles.title, { color: theme.text }]}>{t('evolution.title')}</Text>
       {stages.length === 1 ? (
-        <Text style={[styles.none, { color: theme.text }]}>Este Pokémon não evolui.</Text>
+        <Text style={[styles.none, { color: theme.text }]}>{t('evolution.none')}</Text>
       ) : (
         stages.map((stage, index) => (
           <View key={stage[0]?.pokemon.name ?? index} style={styles.stage}>
@@ -64,7 +67,10 @@ type CardProps = {
 
 function EvolutionCard({ step, width, isCurrent }: CardProps) {
   const theme = useBrutalTheme();
+  const { t } = useTranslation();
+  const language = useLanguage();
   const name = capitalize(step.pokemon.name);
+  const how = describeEvolution(step.detail, language);
 
   const renderCard = (pressed: boolean) => (
     <BrutalBox
@@ -77,9 +83,9 @@ function EvolutionCard({ step, width, isCurrent }: CardProps) {
         numberOfLines={1}>
         {name.toUpperCase()}
       </Text>
-      {step.how ? (
+      {how ? (
         <Sticker
-          label={step.how}
+          label={how}
           color={theme.white}
           size="small"
           style={[styles.how, { maxWidth: width - 12 }]}
@@ -90,7 +96,7 @@ function EvolutionCard({ step, width, isCurrent }: CardProps) {
 
   if (isCurrent) {
     return (
-      <View style={{ width }} accessible accessibilityLabel={`${name}, o Pokémon desta tela`}>
+      <View style={{ width }} accessible accessibilityLabel={t('evolution.current', { name })}>
         {renderCard(false)}
       </View>
     );
@@ -100,7 +106,7 @@ function EvolutionCard({ step, width, isCurrent }: CardProps) {
     <Pressable
       style={{ width }}
       accessibilityRole="button"
-      accessibilityLabel={step.how ? `${name}, evolui por ${step.how}` : name}
+      accessibilityLabel={how ? t('evolution.step', { name, how }) : name}
       // Navega pelo id: o nome da espécie nem sempre é um nome válido em /pokemon.
       onPress={() =>
         router.push({ pathname: '/pokemon/[name]', params: { name: String(step.pokemon.id) } })

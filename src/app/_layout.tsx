@@ -6,6 +6,7 @@ import {
 } from '@expo-google-fonts/space-grotesk';
 import { DarkTheme, DefaultTheme, Stack, ThemeProvider } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
+import { useTranslation } from 'react-i18next';
 import { useColorScheme } from 'react-native';
 import { Provider } from 'react-redux';
 
@@ -20,6 +21,7 @@ export default function RootLayout() {
   const colorScheme = useColorScheme();
   const brutal = useBrutalTheme();
   const headerOptions = useBrutalHeaderOptions();
+  const { t } = useTranslation();
   const [fontsLoaded] = useFonts({
     ArchivoBlack_400Regular,
     SpaceGrotesk_500Medium,
@@ -44,7 +46,8 @@ export default function RootLayout() {
         <Stack screenOptions={headerOptions}>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="pokemon/[name]" options={{ title: '' }} />
-          <Stack.Screen name="compare" options={{ title: 'COMPARAR' }} />
+          <Stack.Screen name="compare" options={{ title: t('headers.compare') }} />
+          <Stack.Screen name="settings" options={{ title: t('headers.settings') }} />
         </Stack>
       </ThemeProvider>
     </Provider>

@@ -1,7 +1,9 @@
+import type { Language } from '@/i18n/language';
+
 // A PokéAPI tem o idioma pt-br, mas os tipos e os itens não vêm traduzidos; por isso estas tabelas.
 // Os tipos seguem os nomes dos jogos em português. Nos itens e gatilhos, alguns nomes são
 // traduções descritivas e podem não bater exatamente com a versão oficial dos jogos.
-// Algo que falte nas tabelas aparece com o nome em inglês da API, formatado.
+// Em inglês, e para o que falte nas tabelas, vale o nome da API formatado ("water-stone" → "Water Stone").
 
 const TYPE_NAMES: Record<string, string> = {
   normal: 'Normal',
@@ -90,6 +92,37 @@ const TRIGGER_NAMES: Record<string, string> = {
   unclassified: 'Outro',
 };
 
+const STAT_NAMES: Record<Language, Record<string, string>> = {
+  pt: {
+    hp: 'PS',
+    attack: 'Ataque',
+    defense: 'Defesa',
+    'special-attack': 'Ataque Esp.',
+    'special-defense': 'Defesa Esp.',
+    speed: 'Velocidade',
+  },
+  en: {
+    hp: 'HP',
+    attack: 'Attack',
+    defense: 'Defense',
+    'special-attack': 'Sp. Atk',
+    'special-defense': 'Sp. Def',
+    speed: 'Speed',
+  },
+};
+
+// Palavras curtas que acompanham os dados da API nos cards e na linha evolutiva.
+const WORDS = {
+  pt: { level: 'Nv.', trade: 'Troca', friendship: 'Amizade', form: 'Forma', defaultForm: 'Padrão' },
+  en: {
+    level: 'Lv.',
+    trade: 'Trade',
+    friendship: 'Friendship',
+    form: 'Form',
+    defaultForm: 'Default',
+  },
+};
+
 function fromSlug(slug: string) {
   return slug
     .split('-')
@@ -97,14 +130,26 @@ function fromSlug(slug: string) {
     .join(' ');
 }
 
-export function typeName(type: string) {
-  return TYPE_NAMES[type] ?? fromSlug(type);
+function translate(table: Record<string, string>, slug: string, language: Language) {
+  return (language === 'pt' ? table[slug] : undefined) ?? fromSlug(slug);
 }
 
-export function itemName(item: string) {
-  return ITEM_NAMES[item] ?? fromSlug(item);
+export function typeName(type: string, language: Language) {
+  return translate(TYPE_NAMES, type, language);
 }
 
-export function triggerName(trigger: string) {
-  return TRIGGER_NAMES[trigger] ?? fromSlug(trigger);
+export function itemName(item: string, language: Language) {
+  return translate(ITEM_NAMES, item, language);
+}
+
+export function triggerName(trigger: string, language: Language) {
+  return translate(TRIGGER_NAMES, trigger, language);
+}
+
+export function statName(stat: string, language: Language) {
+  return STAT_NAMES[language][stat] ?? fromSlug(stat);
+}
+
+export function word(key: keyof (typeof WORDS)['pt'], language: Language) {
+  return WORDS[language][key];
 }

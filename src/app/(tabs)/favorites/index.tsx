@@ -1,5 +1,6 @@
 import { router } from 'expo-router';
 import { useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { StyleSheet, Text, View } from 'react-native';
 
 import { BrutalButton } from '@/components/brutal-button';
@@ -20,6 +21,7 @@ const SORTERS: Record<SortOrder, (a: PokemonSummary, b: PokemonSummary) => numbe
 
 export default function FavoritesScreen() {
   const theme = useBrutalTheme();
+  const { t } = useTranslation();
   const favorites = useAppSelector(selectFavorites);
   const [order, setOrder] = useState<SortOrder>('number');
 
@@ -29,8 +31,8 @@ export default function FavoritesScreen() {
     return (
       <ScreenMessage
         tone="empty"
-        text="Nenhum favorito ainda. Abra um Pokémon na Pokédex e toque em Favoritar."
-        actionLabel="Abrir a Pokédex"
+        text={t('favorites.empty')}
+        actionLabel={t('favorites.openPokedex')}
         onAction={() => router.navigate('/')}
       />
     );
@@ -42,16 +44,16 @@ export default function FavoritesScreen() {
         data={sorted}
         ListHeaderComponent={
           <View style={styles.sort}>
-            <Text style={[styles.sortLabel, { color: theme.text }]}>ORDENAR POR</Text>
+            <Text style={[styles.sortLabel, { color: theme.text }]}>{t('favorites.sortBy')}</Text>
             <View style={styles.sortButtons}>
               <BrutalButton
-                label="Número"
+                label={t('favorites.byNumber')}
                 selected={order === 'number'}
                 color={order === 'number' ? theme.yellow : theme.white}
                 onPress={() => setOrder('number')}
               />
               <BrutalButton
-                label="Nome"
+                label={t('favorites.byName')}
                 selected={order === 'name'}
                 color={order === 'name' ? theme.yellow : theme.white}
                 onPress={() => setOrder('name')}

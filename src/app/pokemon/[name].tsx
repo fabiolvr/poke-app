@@ -1,6 +1,7 @@
 import { skipToken } from '@reduxjs/toolkit/query';
 import * as Haptics from 'expo-haptics';
 import { router, Stack, useLocalSearchParams } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -29,9 +30,10 @@ import {
   idFromUrl,
   pickFlavorText,
   pickGenus,
-  STAT_LABELS,
 } from '@/features/pokemon/pokemon-utils';
+import { statName } from '@/features/pokemon/translations';
 import { useIsOffline } from '@/hooks/use-is-offline';
+import { useLanguage } from '@/hooks/use-language';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 
 export default function PokemonDetailsScreen() {
@@ -40,6 +42,8 @@ export default function PokemonDetailsScreen() {
   const insets = useSafeAreaInsets();
   const dispatch = useAppDispatch();
   const isOffline = useIsOffline();
+  const { t } = useTranslation();
+  const language = useLanguage();
 
   const { data: pokemon, isLoading, isError, refetch } = useGetPokemonQuery(name);
   // Formas alternativas (ex.: deoxys-normal) têm outro nome de espécie.
@@ -48,19 +52,15 @@ export default function PokemonDetailsScreen() {
   const isFavorite = useAppSelector((state) => selectIsFavorite(state, pokemon?.name ?? name));
 
   if (isLoading) {
-    return <ScreenMessage text="Carregando…" />;
+    return <ScreenMessage text={t('common.loading')} />;
   }
 
   if (isError || !pokemon) {
     return (
       <ScreenMessage
         tone="error"
-        text={
-          isOffline
-            ? 'Sem internet, e este Pokémon ainda não foi aberto neste aparelho.'
-            : 'Não foi possível carregar este Pokémon.'
-        }
-        actionLabel="Tentar de novo"
+        text={isOffline ? t('details.offlineError') : t('details.error')}
+        actionLabel={t('common.retry')}
         onAction={refetch}
       />
     );
@@ -81,7 +81,7 @@ export default function PokemonDetailsScreen() {
         style={[styles.screen, { backgroundColor: theme.paper, borderTopColor: theme.line }]}
         contentContainerStyle={[styles.content, { paddingBottom: Brutal.gap * 2 + insets.bottom }]}>
         <BrutalBox color={mainType.fill} style={styles.hero}>
-          <Sticker label={dexLabel(pokemon)} color={theme.white} style={styles.number} />
+          <Sticker label={dexLabel(pokemon, language)} color={theme.white} style={styles.number} />
           <PokemonImage uri={summary.imageUrl} style={styles.artwork} />
           <View style={styles.types}>
             {pokemon.types.map(({ type }, index) => (
@@ -95,39 +95,41 @@ export default function PokemonDetailsScreen() {
         ) : null}
 
         <BrutalButton
-          label={isFavorite ? 'Remover dos favoritos' : 'Favoritar'}
+          label={isFavorite ? t('details.unfavorite') : t('details.favorite')}
           color={isFavorite ? theme.pink : theme.yellow}
           onPress={handleToggleFavorite}
         />
         <BrutalButton
-          label="Comparar status"
+          label={t('details.compare')}
           color={theme.blue}
           onPress={() => router.push({ pathname: '/compare', params: { a: pokemon.name } })}
         />
 
-        <Text style={[styles.section, { color: theme.text }]}>DADOS</Text>
+        <Text style={[styles.section, { color: theme.text }]}>{t('details.data')}</Text>
         <View style={styles.facts}>
-          <FactBox label="Altura" value={formatHeight(pokemon.height)} />
-          <FactBox label="Peso" value={formatWeight(pokemon.weight)} />
+          <FactBox label={t('details.height')} value={formatHeight(pokemon.height)} />
+          <FactBox label={t('details.weight')} value={formatWeight(pokemon.weight)} />
         </View>
-        {species ? <FactBox label="Categoria" value={pickGenus(species)} /> : null}
+        {species ? <FactBox label={t('details.category')} value={pickGenus(species)} /> : null}
 
-        <Text style={[styles.section, { color: theme.text }]}>STATUS BASE</Text>
+        <Text style={[styles.section, { color: theme.text }]}>{t('details.baseStats')}</Text>
         <BrutalBox style={styles.stats}>
           {pokemon.stats.map(({ stat, base_stat }) => (
             <StatBar
               key={stat.name}
-              label={STAT_LABELS[stat.name] ?? stat.name}
+              label={statName(stat.name, language)}
               value={base_stat}
               color={mainType.fill}
             />
           ))}
         </BrutalBox>
 
-        <BrutalAccordion title="Habilidades">
+        <BrutalAccordion title={t('details.abilities')}>
           {pokemon.abilities.map(({ ability, is_hidden }) => (
             <Text key={ability.name} style={[styles.ability, { color: theme.text }]}>
-              {`${capitalize(ability.name)}${is_hidden ? ' (oculta)' : ''}`}
+              {is_hidden
+                ? t('details.hiddenAbility', { ability: capitalize(ability.name) })
+                : capitalize(ability.name)}
             </Text>
           ))}
         </BrutalAccordion>

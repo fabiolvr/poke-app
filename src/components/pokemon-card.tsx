@@ -1,4 +1,5 @@
 import { router } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, Text } from 'react-native';
 
 import { PokemonImage } from '@/components/pokemon-image';
@@ -8,6 +9,7 @@ import { Brutal, useBrutalTheme } from '@/constants/brutal';
 import { selectIsFavorite } from '@/features/favorites/favorites-slice';
 import { dexLabel, formatName, isDexEntry } from '@/features/pokemon/pokemon-utils';
 import type { PokemonSummary } from '@/features/pokemon/types';
+import { useLanguage } from '@/hooks/use-language';
 import { useAppSelector } from '@/store/hooks';
 
 // A lista da API não traz o tipo, então a cor do card gira pela paleta.
@@ -20,15 +22,20 @@ type Props = {
 
 export function PokemonCard({ pokemon, width }: Props) {
   const theme = useBrutalTheme();
+  const { t } = useTranslation();
+  const language = useLanguage();
   const isFavorite = useAppSelector((state) => selectIsFavorite(state, pokemon.name));
   const color = theme[CARD_COLORS[pokemon.id % CARD_COLORS.length]];
   const name = formatName(pokemon);
+  const label = isDexEntry(pokemon)
+    ? t('card.species', { name, number: pokemon.id })
+    : t('card.form', { name });
 
   return (
     <Pressable
       style={{ width }}
       accessibilityRole="button"
-      accessibilityLabel={`${name}, ${isDexEntry(pokemon) ? `número ${pokemon.id}` : 'forma alternativa'}${isFavorite ? ', favorito' : ''}`}
+      accessibilityLabel={isFavorite ? t('card.favorite', { label }) : label}
       onPress={() => router.push({ pathname: '/pokemon/[name]', params: { name: pokemon.name } })}>
       {({ pressed }) => (
         <BrutalBox color={color} pressed={pressed} style={styles.card}>
@@ -36,7 +43,7 @@ export function PokemonCard({ pokemon, width }: Props) {
           <Text style={[styles.name, { color: theme.textOnColor }]} numberOfLines={1}>
             {name.toUpperCase()}
           </Text>
-          <Sticker label={dexLabel(pokemon)} color={theme.white} style={styles.number} />
+          <Sticker label={dexLabel(pokemon, language)} color={theme.white} style={styles.number} />
           {isFavorite ? (
             // ︎ pede o glifo de texto; sem ele o iOS desenha o emoji vermelho.
             <Sticker label={'♥︎'} color={theme.pink} tilt={6} style={styles.favorite} />

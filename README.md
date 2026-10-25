@@ -46,8 +46,9 @@ Bordas grossas, sombras duras e cores chapadas, com os dados da [PokéAPI](https
 - 🎭 **Formas** de cada Pokémon nos detalhes: megaevoluções, formas regionais e Gigantamax, cada uma com tipos e status próprios.
 - ⚔️ **Comparar status**: escolha um adversário e veja os dois lado a lado, com o total.
 - ❤️ **Favoritos** em aba própria, ordenáveis por número ou nome e salvos no aparelho.
-- 🇧🇷 **Tipos e itens em português** (Fogo, Água, Pedra do Trovão…).
-- 🌗 **Tema claro e escuro**, seguindo o sistema.
+- 🇧🇷 **Português e inglês**: a interface inteira nos dois idiomas. Em português, tipos e itens também são traduzidos (Fogo, Água, Pedra do Trovão…).
+- 🌗 **Tema claro e escuro**, seguindo o sistema ou escolhido pelo usuário.
+- ⚙️ **Configurações** na engrenagem do cabeçalho: tema e idioma (Sistema, ou um fixo), quanto ocupa a cópia offline com um botão para apagar, e a tela Sobre.
 - 📴 **Funciona sem internet** com o que já foi aberto: cada resposta da PokéAPI fica salva no aparelho e é usada quando falta rede. Um adesivo acima das abas avisa que o app está sem internet.
 
 ## 🧰 Tecnologias
@@ -55,7 +56,8 @@ Bordas grossas, sombras duras e cores chapadas, com os dados da [PokéAPI](https
 | | |
 | --- | --- |
 | 📱 App | Expo SDK 58 · React Native 0.88 · Expo Router (rotas em `src/app/`) |
-| 🗃️ Estado e dados | Redux Toolkit 2 · RTK Query para a PokéAPI · slice para os favoritos |
+| 🗃️ Estado e dados | Redux Toolkit 2 · RTK Query para a PokéAPI · slices para os favoritos e as configurações |
+| 🌐 Idiomas | `i18next` + `react-i18next` com chaves tipadas · `expo-localization` para o idioma do aparelho |
 | 🧩 Componentes nativos | `@expo/ui` no campo de busca e na folha de tipos |
 | 💾 Persistência | `expo-sqlite/kv-store` para os favoritos e as respostas da PokéAPI (modo sem internet) · `expo-network` para saber se há conexão |
 | 🔤 Fontes | Archivo Black e Space Grotesk |
@@ -94,7 +96,7 @@ yarn test          # testes unitários (Jest, cerca de 1 s)
 
 ## 🧪 Testes
 
-**Unitários (Jest):** ficam em [`__tests__/`](__tests__) e cobrem as regras sem tela: nomes e rótulos das formas, busca, linha evolutiva, traduções, favoritos e a cópia offline das respostas. Rodam em cerca de 1 segundo com `yarn test`.
+**Unitários (Jest):** ficam em [`__tests__/`](__tests__) e cobrem as regras sem tela: nomes e rótulos das formas, busca, linha evolutiva, traduções nos dois idiomas, escolha do idioma, favoritos e a cópia offline das respostas. Rodam em cerca de 1 segundo com `yarn test`.
 
 **Ponta a ponta (Maestro):** usam o [Maestro](https://maestro.dev/) e ficam em [`.maestro/`](.maestro/README.md). Lá também estão o fluxo 📴 sem internet (`.maestro/offline/`, que roda à parte) e o script 🎬 que grava o vídeo de demonstração no simulador do iOS.
 
@@ -114,14 +116,16 @@ src/
 ├─ constants/      tokens do estilo e cores dos tipos
 ├─ features/
 │  ├─ pokemon/     cliente da PokéAPI, cópia offline das respostas, traduções e funções de apoio
-│  └─ favorites/   slice e persistência dos favoritos
-├─ hooks/          tema, cabeçalho e conexão com a internet
+│  ├─ favorites/   slice e persistência dos favoritos
+│  └─ settings/    slice, persistência e aplicação do tema e do idioma
+├─ hooks/          tema, idioma, cabeçalho e conexão com a internet
+├─ i18n/           textos da interface em português e inglês
 └─ store/          store do Redux, hooks tipados e Reactotron
 ```
 
 ## 📝 Observações
 
-- 🇬🇧 A PokéAPI não traz textos em português. Tipos, itens e gatilhos de evolução são traduzidos por uma tabela no app (`translations.ts`); descrições, categorias e habilidades continuam em inglês.
+- 🇬🇧 A PokéAPI não traz textos em português. Tipos, itens e gatilhos de evolução são traduzidos por uma tabela no app (`translations.ts`); descrições, categorias e habilidades continuam em inglês. Em inglês, tudo vem da própria API.
 - 🔢 Como na PokéAPI, a Pokédex, a busca e o filtro mostram só as 1.025 espécies. As 326 formas alternativas (megas, regionais, Gigantamax…) aparecem na seção Formas dos detalhes de cada espécie.
 - 🌐 O app foi testado no iOS e no Android. A versão web não foi testada.
 

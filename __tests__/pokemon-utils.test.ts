@@ -76,17 +76,19 @@ describe('nomes e números', () => {
   });
 
   it('mostra o número da Pokédex só para espécies', () => {
-    expect(dexLabel({ id: 25 })).toBe('#0025');
-    expect(dexLabel({ id: 1025 })).toBe('#1025');
-    expect(dexLabel({ id: 10034 })).toBe('Forma');
+    expect(dexLabel({ id: 25 }, 'pt')).toBe('#0025');
+    expect(dexLabel({ id: 1025 }, 'pt')).toBe('#1025');
+    expect(dexLabel({ id: 10034 }, 'pt')).toBe('Forma');
+    expect(dexLabel({ id: 10034 }, 'en')).toBe('Form');
   });
 
   it('dá um rótulo curto para cada variedade da espécie', () => {
-    expect(formLabel('charizard', 'charizard')).toBe('Padrão');
-    expect(formLabel('charizard-mega-x', 'charizard')).toBe('Mega X');
-    expect(formLabel('charizard-gmax', 'charizard')).toBe('Gigantamax');
-    expect(formLabel('raichu-alola', 'raichu')).toBe('Alola');
-    expect(formLabel('mr-mime-galar', 'mr-mime')).toBe('Galar');
+    expect(formLabel('charizard', 'charizard', 'pt')).toBe('Padrão');
+    expect(formLabel('charizard', 'charizard', 'en')).toBe('Default');
+    expect(formLabel('charizard-mega-x', 'charizard', 'pt')).toBe('Mega X');
+    expect(formLabel('charizard-gmax', 'charizard', 'pt')).toBe('Gigantamax');
+    expect(formLabel('raichu-alola', 'raichu', 'pt')).toBe('Alola');
+    expect(formLabel('mr-mime-galar', 'mr-mime', 'pt')).toBe('Galar');
   });
 
   it('converte altura e peso para metros e quilos', () => {
@@ -119,24 +121,32 @@ describe('busca', () => {
 });
 
 describe('evoluções', () => {
+  const waterStone = detail({
+    item: { name: 'water-stone', url: '' },
+    trigger: { name: 'use-item', url: '' },
+  });
+
   it('descreve cada gatilho em português', () => {
-    expect(describeEvolution(undefined)).toBe('');
-    expect(describeEvolution(detail({ min_level: 16 }))).toBe('Nv. 16');
-    expect(
-      describeEvolution(
-        detail({ item: { name: 'water-stone', url: '' }, trigger: { name: 'use-item', url: '' } }),
-      ),
-    ).toBe('Pedra da Água');
-    expect(describeEvolution(detail({ trigger: { name: 'trade', url: '' } }))).toBe('Troca');
-    expect(describeEvolution(detail({ min_happiness: 220 }))).toBe('Amizade');
-    expect(describeEvolution(detail({}))).toBe('Subir de nível');
-    expect(describeEvolution(detail({ trigger: { name: 'spin', url: '' } }))).toBe('Girar');
+    expect(describeEvolution(undefined, 'pt')).toBe('');
+    expect(describeEvolution(detail({ min_level: 16 }), 'pt')).toBe('Nv. 16');
+    expect(describeEvolution(waterStone, 'pt')).toBe('Pedra da Água');
+    expect(describeEvolution(detail({ trigger: { name: 'trade', url: '' } }), 'pt')).toBe('Troca');
+    expect(describeEvolution(detail({ min_happiness: 220 }), 'pt')).toBe('Amizade');
+    expect(describeEvolution(detail({}), 'pt')).toBe('Subir de nível');
+    expect(describeEvolution(detail({ trigger: { name: 'spin', url: '' } }), 'pt')).toBe('Girar');
+  });
+
+  it('descreve cada gatilho em inglês com os nomes da API', () => {
+    expect(describeEvolution(detail({ min_level: 16 }), 'en')).toBe('Lv. 16');
+    expect(describeEvolution(waterStone, 'en')).toBe('Water Stone');
+    expect(describeEvolution(detail({ trigger: { name: 'trade', url: '' } }), 'en')).toBe('Trade');
+    expect(describeEvolution(detail({}), 'en')).toBe('Level Up');
   });
 
   it('usa o nome da API quando o gatilho não está na tabela', () => {
-    expect(describeEvolution(detail({ trigger: { name: 'some-new-trigger', url: '' } }))).toBe(
-      'Some New Trigger',
-    );
+    expect(
+      describeEvolution(detail({ trigger: { name: 'some-new-trigger', url: '' } }), 'pt'),
+    ).toBe('Some New Trigger');
   });
 
   it('achata uma linha simples em estágios', () => {
@@ -149,8 +159,8 @@ describe('evoluções', () => {
       ['ivysaur'],
       ['venusaur'],
     ]);
-    expect(stages[1][0].how).toBe('Nv. 16');
-    expect(stages[0][0].how).toBe('');
+    expect(stages[1][0].detail?.min_level).toBe(16);
+    expect(stages[0][0].detail).toBeUndefined();
   });
 
   it('põe evoluções ramificadas no mesmo estágio', () => {
@@ -165,10 +175,10 @@ describe('evoluções', () => {
     ]);
     const stages = flattenChain(chain);
     expect(stages).toHaveLength(2);
-    expect(stages[1].map((step) => [step.pokemon.id, step.how])).toEqual([
-      [134, 'Pedra da Água'],
-      [135, 'Pedra do Trovão'],
-      [136, 'Pedra do Fogo'],
+    expect(stages[1].map((step) => [step.pokemon.id, step.detail?.item?.name])).toEqual([
+      [134, 'water-stone'],
+      [135, 'thunder-stone'],
+      [136, 'fire-stone'],
     ]);
   });
 });

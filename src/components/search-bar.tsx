@@ -1,5 +1,6 @@
 import { Host, TextInput, type TextInputRef } from '@expo/ui';
 import { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, Text } from 'react-native';
 
 import { BrutalBox } from '@/components/brutal-box';
@@ -14,6 +15,7 @@ type Props = {
 // Campo nativo do @expo/ui (SwiftUI/Compose) dentro de uma caixa brutalista.
 export function SearchBar({ value, onChangeText, placeholder }: Props) {
   const theme = useBrutalTheme();
+  const { t } = useTranslation();
   const inputRef = useRef<TextInputRef>(null);
 
   const handleClear = () => {
@@ -41,7 +43,7 @@ export function SearchBar({ value, onChangeText, placeholder }: Props) {
       {value !== '' ? (
         <Pressable
           accessibilityRole="button"
-          accessibilityLabel="Limpar busca"
+          accessibilityLabel={t('common.clearSearch')}
           hitSlop={12}
           onPress={handleClear}>
           <Text style={[styles.clear, { color: theme.text }]}>✕</Text>

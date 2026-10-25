@@ -1,0 +1,111 @@
+// Textos da interface em português. O inglês (en.ts) precisa ter exatamente as mesmas chaves.
+// Nomes de tipos, itens e gatilhos vindos da PokéAPI ficam em features/pokemon/translations.ts.
+export const pt = {
+  common: {
+    retry: 'Tentar de novo',
+    loading: 'Carregando…',
+    clearSearch: 'Limpar busca',
+    settings: 'Configurações',
+  },
+  headers: {
+    pokedex: 'POKÉDEX',
+    favorites: 'FAVORITOS',
+    compare: 'COMPARAR',
+    settings: 'CONFIGURAÇÕES',
+  },
+  tabs: {
+    pokedex: 'Pokédex',
+    favorites: 'Favoritos',
+    offline: 'Sem internet · mostrando o que está salvo',
+  },
+  pokedex: {
+    loading: 'Carregando a Pokédex…',
+    error: 'Não foi possível carregar a Pokédex. Confira sua conexão.',
+    offlineError: 'Sem internet, e esta lista ainda não foi aberta neste aparelho.',
+    search: 'Buscar por nome',
+    filter: 'Filtrar por tipo',
+    changeType: 'Trocar tipo',
+    removeFilter: 'Remover filtro {{type}}',
+    empty: 'Nenhum Pokémon com “{{query}}”.',
+    emptyWithType: 'Nenhum Pokémon com “{{query}}” do tipo {{type}}.',
+  },
+  typeSheet: {
+    title: 'FILTRAR POR TIPO',
+    option: 'Tipo {{type}}',
+  },
+  card: {
+    species: '{{name}}, número {{number}}',
+    form: '{{name}}, forma alternativa',
+    favorite: '{{label}}, favorito',
+  },
+  favorites: {
+    empty: 'Nenhum favorito ainda. Abra um Pokémon na Pokédex e toque em Favoritar.',
+    openPokedex: 'Abrir a Pokédex',
+    sortBy: 'ORDENAR POR',
+    byNumber: 'Número',
+    byName: 'Nome',
+  },
+  details: {
+    error: 'Não foi possível carregar este Pokémon.',
+    offlineError: 'Sem internet, e este Pokémon ainda não foi aberto neste aparelho.',
+    favorite: 'Favoritar',
+    unfavorite: 'Remover dos favoritos',
+    compare: 'Comparar status',
+    data: 'DADOS',
+    height: 'Altura',
+    weight: 'Peso',
+    category: 'Categoria',
+    baseStats: 'STATUS BASE',
+    abilities: 'Habilidades',
+    hiddenAbility: '{{ability}} (oculta)',
+  },
+  forms: {
+    title: 'FORMAS',
+    label: 'Forma {{form}}',
+  },
+  evolution: {
+    title: 'EVOLUÇÕES',
+    none: 'Este Pokémon não evolui.',
+    current: '{{name}}, o Pokémon desta tela',
+    step: '{{name}}, evolui por {{how}}',
+  },
+  compare: {
+    loading: 'Carregando os dois Pokémon…',
+    error: 'Não foi possível carregar os dois Pokémon.',
+    total: 'Total {{name}}',
+    tie: 'Empate: os dois somam {{total}}.',
+    win: '{{winner}} vence no total: {{winnerTotal}} contra {{loserTotal}}.',
+    changeOpponent: 'Trocar adversário',
+    pickTitle: 'QUEM ENFRENTA {{name}}?',
+    search: 'Buscar adversário',
+    listLoading: 'Carregando a lista…',
+    listError: 'Não foi possível carregar a lista.',
+  },
+  settings: {
+    theme: 'TEMA',
+    themes: { system: 'Sistema', light: 'Claro', dark: 'Escuro' },
+    language: 'IDIOMA',
+    languages: { system: 'Sistema', pt: 'Português', en: 'English' },
+    languageHint:
+      'Em português, habilidades, categorias e descrições continuam em inglês: a PokéAPI não traz esses textos traduzidos.',
+    data: 'DADOS SALVOS',
+    dataSummary_one: '{{count}} resposta da PokéAPI · {{size}}',
+    dataSummary_other: '{{count}} respostas da PokéAPI · {{size}}',
+    dataEmpty: 'Nada salvo ainda.',
+    dataHint:
+      'Respostas e imagens usadas quando o app está sem internet. Apagar não mexe nos favoritos.',
+    clear: 'Apagar dados salvos',
+    clearTitle: 'Apagar dados salvos?',
+    clearMessage: 'Sem internet, só vai aparecer o que for aberto de novo.',
+    clearConfirm: 'Apagar',
+    cancel: 'Cancelar',
+    about: 'SOBRE',
+    version: 'Poke App · versão {{version}}',
+    credits: 'Dados e imagens da PokéAPI.',
+    openPokeApi: 'Abrir pokeapi.co',
+    trademark:
+      'Pokémon e nomes relacionados são marcas da Nintendo, Game Freak e The Pokémon Company. Projeto pessoal, sem fins comerciais.',
+  },
+};
+
+export type Translations = typeof pt;

@@ -1,6 +1,7 @@
 import { Sticker } from '@/components/sticker';
 import { getTypeColor } from '@/constants/type-colors';
 import { typeName } from '@/features/pokemon/translations';
+import { useLanguage } from '@/hooks/use-language';
 
 type Props = {
   type: string;
@@ -9,5 +10,6 @@ type Props = {
 
 export function TypeBadge({ type, tilt }: Props) {
   const { fill, text } = getTypeColor(type);
-  return <Sticker label={typeName(type)} color={fill} textColor={text} tilt={tilt} />;
+  const language = useLanguage();
+  return <Sticker label={typeName(type, language)} color={fill} textColor={text} tilt={tilt} />;
 }

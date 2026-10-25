@@ -52,10 +52,11 @@ export type EvolutionChain = {
   chain: ChainLink;
 };
 
-// Um Pokémon dentro da linha evolutiva e o que faz ele evoluir ("Nv. 16", "Troca").
+// Um Pokémon dentro da linha evolutiva e o que faz ele evoluir. O texto ("Nv. 16", "Troca")
+// é montado na tela, no idioma escolhido.
 export type EvolutionStep = {
   pokemon: PokemonSummary;
-  how: string;
+  detail: EvolutionDetail | undefined;
 };
 
 // O mínimo que a lista e os favoritos precisam para desenhar uma linha.
