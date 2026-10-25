@@ -27,8 +27,22 @@ const accents = {
 };
 
 export const BrutalThemes = {
-  light: { ...accents, paper: '#FFF6E0', surface: '#FFFFFF', line: '#111111', text: '#111111' },
-  dark: { ...accents, paper: '#141414', surface: '#232323', line: '#F2EBDD', text: '#F2EBDD' },
+  light: {
+    ...accents,
+    paper: '#FFF6E0',
+    surface: '#FFFFFF',
+    line: '#111111',
+    text: '#111111',
+    muted: '#6E6658',
+  },
+  dark: {
+    ...accents,
+    paper: '#141414',
+    surface: '#232323',
+    line: '#F2EBDD',
+    text: '#F2EBDD',
+    muted: '#A39C90',
+  },
 };
 
 export type BrutalTheme = (typeof BrutalThemes)['light'];

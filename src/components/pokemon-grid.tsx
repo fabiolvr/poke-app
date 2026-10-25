@@ -8,7 +8,11 @@ import type { PokemonSummary } from '@/features/pokemon/types';
 
 type Props = Pick<
   FlatListProps<PokemonSummary>,
-  'onEndReached' | 'refreshControl' | 'ListHeaderComponent' | 'ListFooterComponent'
+  | 'onEndReached'
+  | 'refreshControl'
+  | 'ListHeaderComponent'
+  | 'ListFooterComponent'
+  | 'ListEmptyComponent'
 > & {
   data: PokemonSummary[];
 };
@@ -33,7 +37,9 @@ export function PokemonGrid({ data, ...listProps }: Props) {
       renderItem={renderItem}
       keyExtractor={(pokemon) => pokemon.name}
       numColumns={COLUMNS}
-      style={[styles.list, { backgroundColor: theme.paper, borderTopColor: theme.line }]}
+      style={[styles.list, { backgroundColor: theme.paper }]}
+      keyboardDismissMode="on-drag"
+      keyboardShouldPersistTaps="handled"
       columnWrapperStyle={styles.row}
       contentContainerStyle={[
         styles.content,
@@ -46,7 +52,7 @@ export function PokemonGrid({ data, ...listProps }: Props) {
 }
 
 const styles = StyleSheet.create({
-  list: { flex: 1, borderTopWidth: Brutal.border },
+  list: { flex: 1 },
   row: { gap: Brutal.gap },
   content: { padding: Brutal.gap, paddingTop: Brutal.gap + 12, gap: Brutal.gap + 12 },
 });

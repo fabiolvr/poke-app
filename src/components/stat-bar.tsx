@@ -17,7 +17,9 @@ export function StatBar({ label, value, color }: Props) {
 
   return (
     <View style={styles.row} accessible accessibilityLabel={`${label}: ${value}`}>
-      <Text style={[styles.label, { color: theme.text }]}>{label}</Text>
+      <Text style={[styles.label, { color: theme.text }]} numberOfLines={1}>
+        {label}
+      </Text>
       <View style={[styles.track, { borderColor: theme.line, backgroundColor: theme.paper }]}>
         <View
           style={[

@@ -44,6 +44,7 @@ export default function RootLayout() {
         <Stack screenOptions={headerOptions}>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="pokemon/[name]" options={{ title: '' }} />
+          <Stack.Screen name="compare" options={{ title: 'COMPARAR' }} />
         </Stack>
       </ThemeProvider>
     </Provider>

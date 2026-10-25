@@ -31,6 +31,8 @@ const TYPE_COLORS: Record<string, TypeColor> = {
 
 const FALLBACK: TypeColor = { fill: '#B0B0B0', text: DARK_TEXT };
 
+export const TYPE_NAMES = Object.keys(TYPE_COLORS);
+
 export function getTypeColor(type: string): TypeColor {
   return TYPE_COLORS[type] ?? FALLBACK;
 }

@@ -3,6 +3,7 @@ import { useMemo, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 import { BrutalButton } from '@/components/brutal-button';
+import { BrutalScreen } from '@/components/brutal-screen';
 import { PokemonGrid } from '@/components/pokemon-grid';
 import { ScreenMessage } from '@/components/screen-message';
 import { Brutal, useBrutalTheme } from '@/constants/brutal';
@@ -36,28 +37,30 @@ export default function FavoritesScreen() {
   }
 
   return (
-    <PokemonGrid
-      data={sorted}
-      ListHeaderComponent={
-        <View style={styles.sort}>
-          <Text style={[styles.sortLabel, { color: theme.text }]}>ORDENAR POR</Text>
-          <View style={styles.sortButtons}>
-            <BrutalButton
-              label="Número"
-              selected={order === 'number'}
-              color={order === 'number' ? theme.yellow : theme.white}
-              onPress={() => setOrder('number')}
-            />
-            <BrutalButton
-              label="Nome"
-              selected={order === 'name'}
-              color={order === 'name' ? theme.yellow : theme.white}
-              onPress={() => setOrder('name')}
-            />
+    <BrutalScreen>
+      <PokemonGrid
+        data={sorted}
+        ListHeaderComponent={
+          <View style={styles.sort}>
+            <Text style={[styles.sortLabel, { color: theme.text }]}>ORDENAR POR</Text>
+            <View style={styles.sortButtons}>
+              <BrutalButton
+                label="Número"
+                selected={order === 'number'}
+                color={order === 'number' ? theme.yellow : theme.white}
+                onPress={() => setOrder('number')}
+              />
+              <BrutalButton
+                label="Nome"
+                selected={order === 'name'}
+                color={order === 'name' ? theme.yellow : theme.white}
+                onPress={() => setOrder('name')}
+              />
+            </View>
           </View>
-        </View>
-      }
-    />
+        }
+      />
+    </BrutalScreen>
   );
 }
 

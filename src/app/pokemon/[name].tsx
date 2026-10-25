@@ -1,13 +1,14 @@
 import { skipToken } from '@reduxjs/toolkit/query';
 import * as Haptics from 'expo-haptics';
 import { Image } from 'expo-image';
-import { Stack, useLocalSearchParams } from 'expo-router';
+import { router, Stack, useLocalSearchParams } from 'expo-router';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { BrutalAccordion } from '@/components/brutal-accordion';
 import { BrutalBox } from '@/components/brutal-box';
 import { BrutalButton } from '@/components/brutal-button';
+import { EvolutionChain } from '@/components/evolution-chain';
 import { FactBox } from '@/components/fact-box';
 import { ScreenMessage } from '@/components/screen-message';
 import { StatBar } from '@/components/stat-bar';
@@ -23,6 +24,7 @@ import {
   formatDexNumber,
   formatHeight,
   formatWeight,
+  idFromUrl,
   pickFlavorText,
   pickGenus,
   STAT_LABELS,
@@ -38,7 +40,8 @@ export default function PokemonDetailsScreen() {
   const { data: pokemon, isLoading, isError, refetch } = useGetPokemonQuery(name);
   // Formas alternativas (ex.: deoxys-normal) têm outro nome de espécie.
   const { data: species } = useGetPokemonSpeciesQuery(pokemon?.species.name ?? skipToken);
-  const isFavorite = useAppSelector((state) => selectIsFavorite(state, name));
+  // A rota pode chegar com o id (vindo da linha evolutiva); o favorito é guardado pelo nome.
+  const isFavorite = useAppSelector((state) => selectIsFavorite(state, pokemon?.name ?? name));
 
   if (isLoading) {
     return <ScreenMessage text="Carregando…" />;
@@ -88,6 +91,11 @@ export default function PokemonDetailsScreen() {
           color={isFavorite ? theme.pink : theme.yellow}
           onPress={handleToggleFavorite}
         />
+        <BrutalButton
+          label="Comparar status"
+          color={theme.blue}
+          onPress={() => router.push({ pathname: '/compare', params: { a: pokemon.name } })}
+        />
 
         <Text style={[styles.section, { color: theme.text }]}>DADOS</Text>
         <View style={styles.facts}>
@@ -115,6 +123,10 @@ export default function PokemonDetailsScreen() {
             </Text>
           ))}
         </BrutalAccordion>
+
+        {species ? (
+          <EvolutionChain chainId={idFromUrl(species.evolution_chain.url)} currentId={pokemon.id} />
+        ) : null}
       </ScrollView>
     </>
   );
