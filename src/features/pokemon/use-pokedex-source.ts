@@ -18,18 +18,22 @@ export function usePokedexSource(query: string, type: string | null) {
   const byType = useGetPokemonByTypeQuery(type ?? skipToken);
   const active = type !== null ? byType : isSearching ? all : pages;
 
+  // `currentData` é só do argumento atual: ao trocar de tipo, a grade não mostra o tipo anterior
+  // enquanto carrega, nem quando o novo falha (ex.: sem internet).
   const data = useMemo(() => {
     if (type !== null) {
-      return (byType.data ?? []).filter((pokemon) => matchesQuery(pokemon, query));
+      return (byType.currentData ?? []).filter((pokemon) => matchesQuery(pokemon, query));
     }
     if (isSearching) {
-      return (all.data ?? []).filter((pokemon) => matchesQuery(pokemon, query));
+      return (all.currentData ?? []).filter((pokemon) => matchesQuery(pokemon, query));
     }
     // A última página traz as primeiras formas alternativas junto com as últimas espécies.
     return (
-      pages.data?.pages.flatMap((page) => page.results.map(toSummary).filter(isDexEntry)) ?? []
+      pages.currentData?.pages.flatMap((page) => page.results.map(toSummary).filter(isDexEntry)) ??
+      []
     );
-  }, [type, isSearching, query, byType.data, all.data, pages.data]);
+  }, [type, isSearching, query, byType.currentData, all.currentData, pages.currentData]);
+  const hasData = active.currentData !== undefined;
 
   const { hasNextPage, isFetchingNextPage, fetchNextPage } = pages;
   const loadMore = useCallback(() => {
@@ -41,8 +45,9 @@ export function usePokedexSource(query: string, type: string | null) {
   return {
     data,
     isFiltered,
-    isLoading: active.isLoading,
-    isError: active.isError,
+    isLoading: active.isFetching && !hasData,
+    // Se a próxima página falha (ex.: sem internet), a grade continua com o que já carregou.
+    isError: active.isError && !hasData,
     refetch: active.refetch,
     loadMore,
     isFetchingMore: !isFiltered && isFetchingNextPage,
