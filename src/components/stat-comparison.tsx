@@ -11,12 +11,7 @@ import { Sticker } from '@/components/sticker';
 import { Brutal, useBrutalTheme } from '@/constants/brutal';
 import { getTypeColor } from '@/constants/type-colors';
 import { useGetPokemonQuery } from '@/features/pokemon/pokemon-api';
-import {
-  artworkUrl,
-  capitalize,
-  formatDexNumber,
-  STAT_LABELS,
-} from '@/features/pokemon/pokemon-utils';
+import { artworkUrl, dexLabel, formatName, STAT_LABELS } from '@/features/pokemon/pokemon-utils';
 import type { Pokemon } from '@/features/pokemon/types';
 
 type Props = {
@@ -36,7 +31,7 @@ function describeResult(left: Pokemon, right: Pokemon) {
     return `Empate: os dois somam ${leftTotal}.`;
   }
   const [winner, loser] = leftTotal > rightTotal ? [left, right] : [right, left];
-  return `${capitalize(winner.name)} vence no total: ${totalOf(winner)} contra ${totalOf(loser)}.`;
+  return `${formatName(winner)} vence no total: ${totalOf(winner)} contra ${totalOf(loser)}.`;
 }
 
 export function StatComparison({ first, second, onChangeOpponent }: Props) {
@@ -83,9 +78,9 @@ export function StatComparison({ first, second, onChangeOpponent }: Props) {
           <Text style={[styles.statTitle, { color: theme.text }]}>
             {(STAT_LABELS[stat.name] ?? stat.name).toUpperCase()}
           </Text>
-          <StatBar label={capitalize(left.name)} value={base_stat} color={leftColor.fill} />
+          <StatBar label={formatName(left)} value={base_stat} color={leftColor.fill} />
           <StatBar
-            label={capitalize(right.name)}
+            label={formatName(right)}
             value={right.stats.find((other) => other.stat.name === stat.name)?.base_stat ?? 0}
             color={rightColor.fill}
           />
@@ -93,8 +88,8 @@ export function StatComparison({ first, second, onChangeOpponent }: Props) {
       ))}
 
       <View style={styles.totals}>
-        <FactBox label={`Total ${capitalize(left.name)}`} value={String(totalOf(left))} />
-        <FactBox label={`Total ${capitalize(right.name)}`} value={String(totalOf(right))} />
+        <FactBox label={`Total ${formatName(left)}`} value={String(totalOf(left))} />
+        <FactBox label={`Total ${formatName(right)}`} value={String(totalOf(right))} />
       </View>
       <Text style={[styles.result, { color: theme.text }]}>{describeResult(left, right)}</Text>
 
@@ -114,9 +109,9 @@ function Contender({ pokemon, fill, text }: ContenderProps) {
     <BrutalBox color={fill} style={styles.contender}>
       <Image source={artworkUrl(pokemon.id)} style={styles.image} contentFit="contain" />
       <Text style={[styles.name, { color: text }]} numberOfLines={1}>
-        {pokemon.name.toUpperCase()}
+        {formatName(pokemon).toUpperCase()}
       </Text>
-      <Text style={[styles.number, { color: text }]}>{formatDexNumber(pokemon.id)}</Text>
+      <Text style={[styles.number, { color: text }]}>{dexLabel(pokemon)}</Text>
     </BrutalBox>
   );
 }

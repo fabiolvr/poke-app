@@ -6,6 +6,7 @@ Os fluxos rodam no Expo Go, com o servidor ligado (`yarn expo start`).
 | --- | --- |
 | `pokedex.yaml` | Grade com paginação, detalhes do Pikachu, favoritar, habilidades e aba Favoritos |
 | `evolucoes.yaml` | Busca por nome, filtro por tipo, linha evolutiva do Eevee e comparação Vaporeon × Jolteon |
+| `formas.yaml` | Formas do Charizard (Mega X é Fogo/Dragão) e Raichu de Alola (Elétrico/Psíquico) |
 
 ## Rodar
 

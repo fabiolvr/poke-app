@@ -9,6 +9,7 @@ import { BrutalAccordion } from '@/components/brutal-accordion';
 import { BrutalBox } from '@/components/brutal-box';
 import { BrutalButton } from '@/components/brutal-button';
 import { EvolutionChain } from '@/components/evolution-chain';
+import { PokemonForms } from '@/components/pokemon-forms';
 import { FactBox } from '@/components/fact-box';
 import { ScreenMessage } from '@/components/screen-message';
 import { StatBar } from '@/components/stat-bar';
@@ -21,7 +22,8 @@ import { useGetPokemonQuery, useGetPokemonSpeciesQuery } from '@/features/pokemo
 import {
   artworkUrl,
   capitalize,
-  formatDexNumber,
+  dexLabel,
+  formatName,
   formatHeight,
   formatWeight,
   idFromUrl,
@@ -68,12 +70,12 @@ export default function PokemonDetailsScreen() {
 
   return (
     <>
-      <Stack.Screen options={{ title: pokemon.name.toUpperCase() }} />
+      <Stack.Screen options={{ title: formatName(pokemon).toUpperCase() }} />
       <ScrollView
         style={[styles.screen, { backgroundColor: theme.paper, borderTopColor: theme.line }]}
         contentContainerStyle={[styles.content, { paddingBottom: Brutal.gap * 2 + insets.bottom }]}>
         <BrutalBox color={mainType.fill} style={styles.hero}>
-          <Sticker label={formatDexNumber(pokemon.id)} color={theme.white} style={styles.number} />
+          <Sticker label={dexLabel(pokemon)} color={theme.white} style={styles.number} />
           <Image source={summary.imageUrl} style={styles.artwork} contentFit="contain" />
           <View style={styles.types}>
             {pokemon.types.map(({ type }, index) => (
@@ -125,7 +127,14 @@ export default function PokemonDetailsScreen() {
         </BrutalAccordion>
 
         {species ? (
-          <EvolutionChain chainId={idFromUrl(species.evolution_chain.url)} currentId={pokemon.id} />
+          <>
+            <PokemonForms species={species} currentName={pokemon.name} />
+            <EvolutionChain
+              chainId={idFromUrl(species.evolution_chain.url)}
+              // Numa forma (ex.: Mega X), destaca a espécie a que ela pertence.
+              currentId={idFromUrl(pokemon.species.url)}
+            />
+          </>
         ) : null}
       </ScrollView>
     </>

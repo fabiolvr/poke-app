@@ -4,21 +4,22 @@ name: Pokédex, detalhes e favoritos
 - runFlow: subflows/abrir-app.yaml
 
 # Grade com paginação: o Clefairy (#0035) só chega na segunda página.
+# Timeout de 60 s: no emulador Android cada gesto avança pouco nesta grade de cards grandes.
 - takeScreenshot: .maestro/capturas/pokedex-01-grade
 - scrollUntilVisible:
     element: "Pikachu.*"
     direction: DOWN
-    timeout: 30000
+    timeout: 60000
     visibilityPercentage: 50
 - scrollUntilVisible:
     element: "Clefairy.*"
     direction: DOWN
-    timeout: 30000
+    timeout: 60000
     visibilityPercentage: 50
 - scrollUntilVisible:
     element: "Pikachu.*"
     direction: UP
-    timeout: 30000
+    timeout: 60000
     visibilityPercentage: 50
     centerElement: true
 
@@ -39,7 +40,10 @@ name: Pokédex, detalhes e favoritos
     element: "Habilidades"
     direction: DOWN
 - tapOn: "Habilidades"
-- assertVisible: "Static"
+# O acordeão pode abrir na beirada da tela; rola até o conteúdo aparecer.
+- scrollUntilVisible:
+    element: "Static"
+    direction: DOWN
 - runFlow: subflows/voltar.yaml
 
 # Favoritos

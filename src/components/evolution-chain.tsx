@@ -26,7 +26,9 @@ export function EvolutionChain({ chainId, currentId }: Props) {
     return null;
   }
 
-  const cardWidth = (width - Brutal.gap * 2 - CARD_GAP * (COLUMNS - 1)) / COLUMNS;
+  // Arredonda para baixo: no Android a soma das larguras fracionárias passava do espaço e o
+  // último card da linha descia para a linha seguinte.
+  const cardWidth = Math.floor((width - Brutal.gap * 2 - CARD_GAP * (COLUMNS - 1)) / COLUMNS);
 
   return (
     <View style={styles.container}>

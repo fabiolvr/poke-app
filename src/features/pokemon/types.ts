@@ -22,9 +22,12 @@ export type Pokemon = {
 };
 
 export type PokemonSpecies = {
+  name: string;
   genera: { genus: string; language: NamedResource }[];
   flavor_text_entries: { flavor_text: string; language: NamedResource }[];
   evolution_chain: { url: string };
+  // Variedades da espécie: a padrão (mesmo número) e as formas (megas, regionais…).
+  varieties: { is_default: boolean; pokemon: NamedResource }[];
 };
 
 export type TypeResponse = {

@@ -6,7 +6,7 @@ import { BrutalBox } from '@/components/brutal-box';
 import { Sticker } from '@/components/sticker';
 import { Brutal, useBrutalTheme } from '@/constants/brutal';
 import { selectIsFavorite } from '@/features/favorites/favorites-slice';
-import { capitalize, formatDexNumber } from '@/features/pokemon/pokemon-utils';
+import { dexLabel, formatName, isDexEntry } from '@/features/pokemon/pokemon-utils';
 import type { PokemonSummary } from '@/features/pokemon/types';
 import { useAppSelector } from '@/store/hooks';
 
@@ -22,13 +22,13 @@ export function PokemonCard({ pokemon, width }: Props) {
   const theme = useBrutalTheme();
   const isFavorite = useAppSelector((state) => selectIsFavorite(state, pokemon.name));
   const color = theme[CARD_COLORS[pokemon.id % CARD_COLORS.length]];
-  const name = capitalize(pokemon.name);
+  const name = formatName(pokemon);
 
   return (
     <Pressable
       style={{ width }}
       accessibilityRole="button"
-      accessibilityLabel={`${name}, número ${pokemon.id}${isFavorite ? ', favorito' : ''}`}
+      accessibilityLabel={`${name}, ${isDexEntry(pokemon) ? `número ${pokemon.id}` : 'forma alternativa'}${isFavorite ? ', favorito' : ''}`}
       onPress={() => router.push({ pathname: '/pokemon/[name]', params: { name: pokemon.name } })}>
       {({ pressed }) => (
         <BrutalBox color={color} pressed={pressed} style={styles.card}>
@@ -36,7 +36,7 @@ export function PokemonCard({ pokemon, width }: Props) {
           <Text style={[styles.name, { color: theme.textOnColor }]} numberOfLines={1}>
             {name.toUpperCase()}
           </Text>
-          <Sticker label={formatDexNumber(pokemon.id)} color={theme.white} style={styles.number} />
+          <Sticker label={dexLabel(pokemon)} color={theme.white} style={styles.number} />
           {isFavorite ? (
             // ︎ pede o glifo de texto; sem ele o iOS desenha o emoji vermelho.
             <Sticker label={'♥︎'} color={theme.pink} tilt={6} style={styles.favorite} />

@@ -18,12 +18,15 @@ export const pokemonApi = createApi({
   reducerPath: 'pokemonApi',
   baseQuery: fetchBaseQuery({ baseUrl: 'https://pokeapi.co/api/v2/' }),
   endpoints: (build) => ({
-    // Paginação por offset: cada página pede mais 30 Pokémon.
+    // Paginação por offset: cada página pede mais 30 Pokémon. A API lista primeiro as espécies
+    // (1 a 1025) e depois as formas alternativas; a grade para na página em que elas começam.
     getPokemonList: build.infiniteQuery<PokemonListResponse, void, number>({
       infiniteQueryOptions: {
         initialPageParam: 0,
-        getNextPageParam: (lastPage, _allPages, lastPageParam) =>
-          lastPage.next ? lastPageParam + PAGE_SIZE : undefined,
+        getNextPageParam: (lastPage, _allPages, lastPageParam) => {
+          const reachedForms = lastPage.results.some((entry) => !isDexEntry(toSummary(entry)));
+          return lastPage.next && !reachedForms ? lastPageParam + PAGE_SIZE : undefined;
+        },
       },
       query: ({ pageParam }) => `pokemon?limit=${PAGE_SIZE}&offset=${pageParam}`,
     }),

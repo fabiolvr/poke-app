@@ -6,7 +6,7 @@ import {
   useGetPokemonByTypeQuery,
   useGetPokemonListInfiniteQuery,
 } from './pokemon-api';
-import { matchesQuery, toSummary } from './pokemon-utils';
+import { isDexEntry, matchesQuery, toSummary } from './pokemon-utils';
 
 // Decide de onde vem a lista da Pokédex: páginas da API, todos os nomes (busca) ou um tipo.
 export function usePokedexSource(query: string, type: string | null) {
@@ -25,7 +25,10 @@ export function usePokedexSource(query: string, type: string | null) {
     if (isSearching) {
       return (all.data ?? []).filter((pokemon) => matchesQuery(pokemon, query));
     }
-    return pages.data?.pages.flatMap((page) => page.results.map(toSummary)) ?? [];
+    // A última página traz as primeiras formas alternativas junto com as últimas espécies.
+    return (
+      pages.data?.pages.flatMap((page) => page.results.map(toSummary).filter(isDexEntry)) ?? []
+    );
   }, [type, isSearching, query, byType.data, all.data, pages.data]);
 
   const { hasNextPage, isFetchingNextPage, fetchNextPage } = pages;

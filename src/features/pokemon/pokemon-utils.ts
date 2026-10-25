@@ -36,8 +36,41 @@ export function toSummary(resource: NamedResource): PokemonSummary {
   return { id, name: resource.name, imageUrl: artworkUrl(id) };
 }
 
-export function isDexEntry(pokemon: PokemonSummary) {
+export function isDexEntry(pokemon: Pick<PokemonSummary, 'id'>) {
   return pokemon.id < FIRST_ALTERNATE_FORM_ID;
+}
+
+// Palavras dos nomes de forma que pedem mais que só a inicial maiúscula.
+const FORM_WORDS: Record<string, string> = {
+  gmax: 'Gigantamax',
+};
+
+function formatWords(slug: string) {
+  return slug
+    .split('-')
+    .map((word) => FORM_WORDS[word] ?? capitalize(word))
+    .join(' ');
+}
+
+// Espécies mantêm o nome da API ("Ho-oh"); formas ficam legíveis ("Charizard Mega X").
+export function formatName(pokemon: Pick<PokemonSummary, 'id' | 'name'>) {
+  return isDexEntry(pokemon) ? capitalize(pokemon.name) : formatWords(pokemon.name);
+}
+
+// Número da Pokédex para espécies; formas não têm número próprio.
+export function dexLabel(pokemon: Pick<PokemonSummary, 'id'>) {
+  return isDexEntry(pokemon) ? formatDexNumber(pokemon.id) : 'Forma';
+}
+
+// Rótulo curto de uma variedade dentro da espécie: "charizard-mega-x" → "Mega X".
+export function formLabel(varietyName: string, speciesName: string) {
+  if (varietyName === speciesName) {
+    return 'Padrão';
+  }
+  const prefix = `${speciesName}-`;
+  return formatWords(
+    varietyName.startsWith(prefix) ? varietyName.slice(prefix.length) : varietyName,
+  );
 }
 
 // Os nomes da API são minúsculos e usam hífen no lugar de espaço ("mr-mime").

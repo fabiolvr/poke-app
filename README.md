@@ -31,10 +31,11 @@ Bordas grossas, sombras duras e cores chapadas, com os dados da [PokéAPI](https
 
 ## ✨ O que o app faz
 
-- 📖 **Pokédex** em grade, carregada de 30 em 30 enquanto você rola, na ordem da Pokédex nacional. Puxar para baixo recarrega.
+- 📖 **Pokédex** em grade com as 1.025 espécies, carregada de 30 em 30 enquanto você rola. Puxar para baixo recarrega.
 - 🔎 **Busca por nome** e 🏷️ **filtro por tipo**, numa folha que sobe da parte de baixo da tela. Os dois funcionam juntos.
 - 📊 **Detalhes** com arte oficial, tipos, descrição, altura e peso, status base em barras e habilidades.
 - 🧬 **Linha evolutiva** com o que faz cada etapa evoluir (Nv. 16, Water stone, Troca…).
+- 🎭 **Formas** de cada Pokémon nos detalhes: megaevoluções, formas regionais e Gigantamax, cada uma com tipos e status próprios.
 - ⚔️ **Comparar status**: escolha um adversário e veja os dois lado a lado, com o total.
 - ❤️ **Favoritos** em aba própria, ordenáveis por número ou nome e salvos no aparelho.
 - 🌗 **Tema claro e escuro**, seguindo o sistema.
@@ -96,7 +97,7 @@ src/
 ## 📝 Observações
 
 - 🇬🇧 A PokéAPI não tem descrições em português; o app mostra o texto em inglês.
-- 🔢 Formas alternativas (megas, regionais) têm id acima de 10000. A busca e o filtro por tipo as deixam de fora; a grade as mostra no fim, depois do #1025, porque segue a lista paginada da API.
+- 🔢 Como na PokéAPI, a Pokédex, a busca e o filtro mostram só as 1.025 espécies. As 326 formas alternativas (megas, regionais, Gigantamax…) aparecem na seção Formas dos detalhes de cada espécie.
 - 🌐 O app foi testado no iOS e no Android. A versão web não foi testada.
 
 <div align="center">

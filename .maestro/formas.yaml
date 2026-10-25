@@ -1,0 +1,41 @@
+appId: ${APP_ID}
+name: Formas alternativas nos detalhes
+---
+- runFlow: subflows/abrir-app.yaml
+
+# Charizard: Mega X é Fogo/Dragão, diferente da forma padrão.
+- tapOn: "Buscar por nome"
+- inputText: "charizard"
+- hideKeyboard:
+    optional: true
+- tapOn: "Charizard, número 6.*"
+- scrollUntilVisible:
+    element: "Forma Mega X"
+    direction: DOWN
+- assertVisible: "Forma Mega Y"
+- assertVisible: "Forma Gigantamax"
+- takeScreenshot: .maestro/capturas/formas-01-charizard
+- tapOn: "Forma Mega X"
+- assertVisible: "Dragon"
+- assertVisible: "Forma"
+- takeScreenshot: .maestro/capturas/formas-02-mega-x
+# Da Mega X dá para voltar à forma padrão pela mesma seção.
+- scrollUntilVisible:
+    element: "Forma Padrão"
+    direction: DOWN
+- tapOn: "Forma Padrão"
+- assertVisible: "#0006"
+
+# Raichu de Alola: Elétrico/Psíquico.
+- runFlow: subflows/abrir-app.yaml
+- tapOn: "Buscar por nome"
+- inputText: "raichu"
+- hideKeyboard:
+    optional: true
+- tapOn: "Raichu, número 26.*"
+- scrollUntilVisible:
+    element: "Forma Alola"
+    direction: DOWN
+- tapOn: "Forma Alola"
+- assertVisible: "Psychic"
+- takeScreenshot: .maestro/capturas/formas-03-raichu-alola
