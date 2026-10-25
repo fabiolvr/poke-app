@@ -55,7 +55,7 @@ Bordas grossas, sombras duras e cores chapadas, com os dados da [PokéAPI](https
 | 🧩 Componentes nativos | `@expo/ui` no campo de busca e na folha de tipos |
 | 💾 Persistência | `expo-sqlite/kv-store` para os favoritos |
 | 🔤 Fontes | Archivo Black e Space Grotesk |
-| 🧪 Qualidade | ESLint + Prettier · TypeScript · Jest (unitários) · Maestro (E2E) |
+| 🧪 Qualidade | ESLint + Prettier · TypeScript · Jest (unitários) · Maestro (E2E) · Reactotron (depuração) |
 
 ## 🚀 Rodar
 
@@ -67,6 +67,8 @@ yarn expo start
 ```
 
 No terminal do Expo, aperte `i` para o simulador do iOS ou `a` para o emulador Android. Roda direto no **Expo Go**, sem development build.
+
+🔍 **Reactotron (opcional):** abra o app de desktop [Reactotron](https://github.com/infinitered/reactotron/releases) antes do `yarn expo start` para ver as actions do Redux, o estado da store, as requisições à PokéAPI e os `console.log`. Ele só é carregado em desenvolvimento e se conecta sozinho, no simulador, no emulador ou no celular.
 
 ## ✅ Antes de terminar uma mudança
 
@@ -100,7 +102,7 @@ src/
 │  ├─ pokemon/     cliente da PokéAPI, tipos e funções de apoio
 │  └─ favorites/   slice e persistência dos favoritos
 ├─ hooks/
-└─ store/          store do Redux e hooks tipados
+└─ store/          store do Redux, hooks tipados e Reactotron
 ```
 
 ## 📝 Observações

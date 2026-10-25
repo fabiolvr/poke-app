@@ -7,6 +7,9 @@
     "icon": "./assets/images/icon.png",
     "scheme": "pokeapp",
     "userInterfaceStyle": "automatic",
+    "ios": {
+      "bundleIdentifier": "com.fabio.dev.pokeapp"
+    },
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#FFD23F",
