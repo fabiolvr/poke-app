@@ -3,6 +3,7 @@ import type {
   EvolutionDetail,
   EvolutionStep,
   NamedResource,
+  Pokemon,
   PokemonSpecies,
   PokemonSummary,
 } from './types';
@@ -131,12 +132,47 @@ export function formatWeight(hectograms: number) {
 }
 
 // A PokéAPI não traz textos em português; usamos inglês.
-export function pickFlavorText(species: PokemonSpecies, language = 'en') {
+const TEXT_LANGUAGE = 'en';
+
+export function pickFlavorText(species: PokemonSpecies, language = TEXT_LANGUAGE) {
   const entry = species.flavor_text_entries.find((item) => item.language.name === language);
   // Os textos antigos escrevem "POKéMON" em caixa alta.
   return entry?.flavor_text.replace(/[\n\f]/g, ' ').replace(/POKéMON/g, 'Pokémon') ?? '';
 }
 
-export function pickGenus(species: PokemonSpecies, language = 'en') {
+export function pickGenus(species: PokemonSpecies, language = TEXT_LANGUAGE) {
   return species.genera.find((item) => item.language.name === language)?.genus ?? '';
+}
+
+// Só os campos que o app usa: a resposta completa de um Pokémon passa de 200 KB por causa
+// da lista de golpes, e ela fica guardada no aparelho para o modo sem internet.
+export function slimPokemon({
+  id,
+  name,
+  height,
+  weight,
+  species,
+  types,
+  stats,
+  abilities,
+}: Pokemon): Pokemon {
+  return { id, name, height, weight, species, types, stats, abilities };
+}
+
+// Mantém só os textos no idioma exibido; a API manda cada um em uma dezena de idiomas.
+export function slimSpecies({
+  name,
+  genera,
+  flavor_text_entries,
+  evolution_chain,
+  varieties,
+}: PokemonSpecies): PokemonSpecies {
+  const inLanguage = ({ language }: { language: NamedResource }) => language.name === TEXT_LANGUAGE;
+  return {
+    name,
+    genera: genera.filter(inLanguage),
+    flavor_text_entries: flavor_text_entries.filter(inLanguage),
+    evolution_chain,
+    varieties,
+  };
 }

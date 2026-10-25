@@ -1,6 +1,7 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi } from '@reduxjs/toolkit/query/react';
 
-import { flattenChain, isDexEntry, toSummary } from './pokemon-utils';
+import { offlineBaseQuery } from './offline-base-query';
+import { flattenChain, isDexEntry, slimPokemon, slimSpecies, toSummary } from './pokemon-utils';
 import type {
   EvolutionChain,
   EvolutionStep,
@@ -16,7 +17,14 @@ const ONE_HOUR = 60 * 60;
 
 export const pokemonApi = createApi({
   reducerPath: 'pokemonApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'https://pokeapi.co/api/v2/' }),
+  // Guarda cada resposta no aparelho e usa a cópia quando não há internet.
+  baseQuery: offlineBaseQuery({
+    baseUrl: 'https://pokeapi.co/api/v2/',
+    slim: {
+      getPokemon: (data) => slimPokemon(data as Pokemon),
+      getPokemonSpecies: (data) => slimSpecies(data as PokemonSpecies),
+    },
+  }),
   endpoints: (build) => ({
     // Paginação por offset: cada página pede mais 30 Pokémon. A API lista primeiro as espécies
     // (1 a 1025) e depois as formas alternativas; a grade para na página em que elas começam.

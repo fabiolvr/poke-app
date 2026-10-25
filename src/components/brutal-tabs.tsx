@@ -4,14 +4,27 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { BrutalBox } from '@/components/brutal-box';
+import { Sticker } from '@/components/sticker';
 import { Brutal, useBrutalTheme } from '@/constants/brutal';
+import { useIsOffline } from '@/hooks/use-is-offline';
 
-// Barra de abas flutuante, desenhada como um card brutalista.
+// Barra de abas flutuante, desenhada como um card brutalista. Sem internet, ganha um adesivo
+// avisando que a Pokédex e os favoritos mostram o que já está salvo no aparelho.
 export function BrutalTabList({ children, ...props }: TabListProps) {
   const insets = useSafeAreaInsets();
+  const theme = useBrutalTheme();
+  const isOffline = useIsOffline();
 
   return (
     <View {...props} style={[styles.container, { bottom: insets.bottom + 8 }]}>
+      {isOffline ? (
+        <Sticker
+          label="Sem internet · mostrando o que está salvo"
+          color={theme.red}
+          tilt={-2}
+          style={styles.offline}
+        />
+      ) : null}
       <BrutalBox style={styles.bar}>{children}</BrutalBox>
     </View>
   );
@@ -50,6 +63,7 @@ export function BrutalTabButton({ label, isFocused = false, icon, ...props }: Ta
 
 const styles = StyleSheet.create({
   container: { position: 'absolute', left: 0, right: 0, alignItems: 'center' },
+  offline: { alignSelf: 'center', marginBottom: 10 },
   bar: { flexDirection: 'row', gap: 10, padding: 8 },
   trigger: { minWidth: 132 },
   tab: {

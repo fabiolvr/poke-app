@@ -12,9 +12,11 @@ import {
   isDexEntry,
   matchesQuery,
   pickFlavorText,
+  slimPokemon,
+  slimSpecies,
   toSummary,
 } from '@/features/pokemon/pokemon-utils';
-import type { ChainLink, EvolutionDetail, PokemonSpecies } from '@/features/pokemon/types';
+import type { ChainLink, EvolutionDetail, Pokemon, PokemonSpecies } from '@/features/pokemon/types';
 
 const resource = (name: string, id: number, kind = 'pokemon-species') => ({
   name,
@@ -188,5 +190,42 @@ describe('descrição da Pokédex', () => {
 
   it('devolve vazio se não houver texto no idioma pedido', () => {
     expect(pickFlavorText(species('Texto', 'ja'))).toBe('');
+  });
+});
+
+describe('respostas reduzidas para guardar no aparelho', () => {
+  it('tira do Pokémon os campos que o app não usa', () => {
+    const pokemon: Pokemon = {
+      id: 25,
+      name: 'pikachu',
+      height: 4,
+      weight: 60,
+      species: resource('pikachu', 25),
+      types: [],
+      stats: [],
+      abilities: [],
+    };
+    const fromApi = { ...pokemon, moves: [{ move: resource('thunderbolt', 85, 'move') }] };
+    expect(slimPokemon(fromApi)).toEqual(pokemon);
+  });
+
+  it('mantém só os textos em inglês da espécie', () => {
+    const text = (flavor_text: string, name: string) => ({
+      flavor_text,
+      language: { name, url: '' },
+    });
+    const species: PokemonSpecies = {
+      name: 'pikachu',
+      genera: [
+        { genus: 'Mouse Pokémon', language: { name: 'en', url: '' } },
+        { genus: 'Pokémon Ratón', language: { name: 'es', url: '' } },
+      ],
+      flavor_text_entries: [text('Electric mouse.', 'en'), text('Souris électrique.', 'fr')],
+      evolution_chain: { url: '' },
+      varieties: [],
+    };
+    const slim = slimSpecies(species);
+    expect(slim.genera.map((item) => item.genus)).toEqual(['Mouse Pokémon']);
+    expect(slim.flavor_text_entries.map((item) => item.flavor_text)).toEqual(['Electric mouse.']);
   });
 });

@@ -31,6 +31,7 @@ import {
   pickGenus,
   STAT_LABELS,
 } from '@/features/pokemon/pokemon-utils';
+import { useIsOffline } from '@/hooks/use-is-offline';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 
 export default function PokemonDetailsScreen() {
@@ -38,6 +39,7 @@ export default function PokemonDetailsScreen() {
   const theme = useBrutalTheme();
   const insets = useSafeAreaInsets();
   const dispatch = useAppDispatch();
+  const isOffline = useIsOffline();
 
   const { data: pokemon, isLoading, isError, refetch } = useGetPokemonQuery(name);
   // Formas alternativas (ex.: deoxys-normal) têm outro nome de espécie.
@@ -53,7 +55,11 @@ export default function PokemonDetailsScreen() {
     return (
       <ScreenMessage
         tone="error"
-        text="Não foi possível carregar este Pokémon."
+        text={
+          isOffline
+            ? 'Sem internet, e este Pokémon ainda não foi aberto neste aparelho.'
+            : 'Não foi possível carregar este Pokémon.'
+        }
         actionLabel="Tentar de novo"
         onAction={refetch}
       />

@@ -45,6 +45,7 @@ Bordas grossas, sombras duras e cores chapadas, com os dados da [PokéAPI](https
 - ❤️ **Favoritos** em aba própria, ordenáveis por número ou nome e salvos no aparelho.
 - 🇧🇷 **Tipos e itens em português** (Fogo, Água, Pedra do Trovão…).
 - 🌗 **Tema claro e escuro**, seguindo o sistema.
+- 📴 **Funciona sem internet** com o que já foi aberto: cada resposta da PokéAPI fica salva no aparelho e é usada quando falta rede. Um adesivo acima das abas avisa que o app está sem internet.
 
 ## 🧰 Tecnologias
 
@@ -53,7 +54,7 @@ Bordas grossas, sombras duras e cores chapadas, com os dados da [PokéAPI](https
 | 📱 App | Expo SDK 58 · React Native 0.88 · Expo Router (rotas em `src/app/`) |
 | 🗃️ Estado e dados | Redux Toolkit 2 · RTK Query para a PokéAPI · slice para os favoritos |
 | 🧩 Componentes nativos | `@expo/ui` no campo de busca e na folha de tipos |
-| 💾 Persistência | `expo-sqlite/kv-store` para os favoritos |
+| 💾 Persistência | `expo-sqlite/kv-store` para os favoritos e as respostas da PokéAPI (modo sem internet) · `expo-network` para saber se há conexão |
 | 🔤 Fontes | Archivo Black e Space Grotesk |
 | 🧪 Qualidade | ESLint + Prettier · TypeScript · Jest (unitários) · Maestro (E2E) · Reactotron (depuração) |
 
@@ -80,7 +81,7 @@ yarn test          # testes unitários (Jest, cerca de 1 s)
 
 ## 🧪 Testes
 
-**Unitários (Jest):** ficam em [`__tests__/`](__tests__) e cobrem as regras sem tela: nomes e rótulos das formas, busca, linha evolutiva, traduções e favoritos. Rodam em cerca de 1 segundo com `yarn test`.
+**Unitários (Jest):** ficam em [`__tests__/`](__tests__) e cobrem as regras sem tela: nomes e rótulos das formas, busca, linha evolutiva, traduções, favoritos e a cópia offline das respostas. Rodam em cerca de 1 segundo com `yarn test`.
 
 **Ponta a ponta (Maestro):** usam o [Maestro](https://maestro.dev/) e ficam em [`.maestro/`](.maestro/README.md). Lá também está o script 🎬 que grava o vídeo de demonstração no simulador do iOS.
 

@@ -11,9 +11,11 @@ import { TypeFilterSheet } from '@/components/type-filter-sheet';
 import { Brutal, useBrutalTheme } from '@/constants/brutal';
 import { typeName } from '@/features/pokemon/translations';
 import { usePokedexSource } from '@/features/pokemon/use-pokedex-source';
+import { useIsOffline } from '@/hooks/use-is-offline';
 
 export default function PokedexScreen() {
   const theme = useBrutalTheme();
+  const isOffline = useIsOffline();
   const [query, setQuery] = useState('');
   const [type, setType] = useState<string | null>(null);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -44,7 +46,11 @@ export default function PokedexScreen() {
         <ScreenMessage
           inline
           tone="error"
-          text="Não foi possível carregar a Pokédex. Confira sua conexão."
+          text={
+            isOffline
+              ? 'Sem internet, e esta lista ainda não foi aberta neste aparelho.'
+              : 'Não foi possível carregar a Pokédex. Confira sua conexão.'
+          }
           actionLabel="Tentar de novo"
           onAction={refetch}
         />
