@@ -23,7 +23,14 @@ export const store = configureStore({
   reducer: rootReducer,
   preloadedState: { favorites: { items: loadFavorites() } },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().prepend(favoritesListener.middleware).concat(pokemonApi.middleware),
+    getDefaultMiddleware({
+      // Checagens só de desenvolvimento: percorrem a store inteira e, com os 1.025 nomes da
+      // busca guardados, passam do limite padrão de 32 ms e enchem o terminal de avisos.
+      immutableCheck: { warnAfter: 128 },
+      serializableCheck: { warnAfter: 128 },
+    })
+      .prepend(favoritesListener.middleware)
+      .concat(pokemonApi.middleware),
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

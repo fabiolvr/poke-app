@@ -28,7 +28,8 @@ name: Vídeo de demonstração (parte 1, tema claro)
     timeout: 500
     optional: true
 - inputText: "char"
-- hideKeyboard
+- hideKeyboard:
+    optional: true
 - extendedWaitUntil:
     visible: "PAUSA_DEMO"
     timeout: 2500
@@ -101,7 +102,8 @@ name: Vídeo de demonstração (parte 1, tema claro)
     timeout: 400
     optional: true
 - inputText: "blastoise"
-- hideKeyboard
+- hideKeyboard:
+    optional: true
 - extendedWaitUntil:
     visible: "PAUSA_DEMO"
     timeout: 1500
