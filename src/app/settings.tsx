@@ -25,6 +25,8 @@ import type { Language, LanguageSetting } from '@/i18n/language';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 
 const POKEAPI_URL = 'https://pokeapi.co';
+// Assinatura do autor: igual nos dois idiomas, com o coração em emoji (vermelho).
+const SIGNATURE = 'Made with \u2764\uFE0F in Belford Roxo';
 
 function formatBytes(bytes: number, language: Language) {
   const locale = language === 'pt' ? 'pt-BR' : 'en-US';
@@ -119,6 +121,8 @@ export default function SettingsScreen() {
         />
         <Text style={hintStyle}>{t('settings.trademark')}</Text>
       </BrutalBox>
+
+      <Text style={[styles.signature, { color: theme.text }]}>{SIGNATURE}</Text>
     </ScrollView>
   );
 }
@@ -130,4 +134,5 @@ const styles = StyleSheet.create({
   box: { padding: 16, gap: 12 },
   text: { fontFamily: Brutal.font.bold, fontSize: 16, lineHeight: 22 },
   hint: { fontFamily: Brutal.font.body, fontSize: 14, lineHeight: 20 },
+  signature: { fontFamily: Brutal.font.bold, fontSize: 15, textAlign: 'center', marginTop: 12 },
 });
