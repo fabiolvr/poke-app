@@ -1,7 +1,7 @@
-import { Image } from 'expo-image';
 import { router } from 'expo-router';
 import { Pressable, StyleSheet, Text } from 'react-native';
 
+import { PokemonImage } from '@/components/pokemon-image';
 import { BrutalBox } from '@/components/brutal-box';
 import { Sticker } from '@/components/sticker';
 import { Brutal, useBrutalTheme } from '@/constants/brutal';
@@ -32,7 +32,7 @@ export function PokemonCard({ pokemon, width }: Props) {
       onPress={() => router.push({ pathname: '/pokemon/[name]', params: { name: pokemon.name } })}>
       {({ pressed }) => (
         <BrutalBox color={color} pressed={pressed} style={styles.card}>
-          <Image source={pokemon.imageUrl} style={styles.artwork} contentFit="contain" />
+          <PokemonImage uri={pokemon.imageUrl} style={styles.artwork} />
           <Text style={[styles.name, { color: theme.textOnColor }]} numberOfLines={1}>
             {name.toUpperCase()}
           </Text>

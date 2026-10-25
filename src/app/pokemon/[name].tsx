@@ -1,10 +1,10 @@
 import { skipToken } from '@reduxjs/toolkit/query';
 import * as Haptics from 'expo-haptics';
-import { Image } from 'expo-image';
 import { router, Stack, useLocalSearchParams } from 'expo-router';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { PokemonImage } from '@/components/pokemon-image';
 import { BrutalAccordion } from '@/components/brutal-accordion';
 import { BrutalBox } from '@/components/brutal-box';
 import { BrutalButton } from '@/components/brutal-button';
@@ -76,7 +76,7 @@ export default function PokemonDetailsScreen() {
         contentContainerStyle={[styles.content, { paddingBottom: Brutal.gap * 2 + insets.bottom }]}>
         <BrutalBox color={mainType.fill} style={styles.hero}>
           <Sticker label={dexLabel(pokemon)} color={theme.white} style={styles.number} />
-          <Image source={summary.imageUrl} style={styles.artwork} contentFit="contain" />
+          <PokemonImage uri={summary.imageUrl} style={styles.artwork} />
           <View style={styles.types}>
             {pokemon.types.map(({ type }, index) => (
               <TypeBadge key={type.name} type={type.name} tilt={index % 2 === 0 ? -3 : 3} />

@@ -1,8 +1,8 @@
-import { Image } from 'expo-image';
 import { useCallback, useMemo, useState } from 'react';
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { PokemonImage } from '@/components/pokemon-image';
 import { BrutalBox } from '@/components/brutal-box';
 import { BrutalScreen } from '@/components/brutal-screen';
 import { ScreenMessage } from '@/components/screen-message';
@@ -92,7 +92,7 @@ function OpponentRow({ pokemon, onPress }: RowProps) {
       onPress={onPress}>
       {({ pressed }) => (
         <BrutalBox pressed={pressed} style={styles.row}>
-          <Image source={pokemon.imageUrl} style={styles.image} contentFit="contain" />
+          <PokemonImage uri={pokemon.imageUrl} style={styles.image} />
           <Text style={[styles.name, { color: theme.text }]} numberOfLines={1}>
             {name.toUpperCase()}
           </Text>

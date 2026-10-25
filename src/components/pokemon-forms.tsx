@@ -1,8 +1,8 @@
-import { Image } from 'expo-image';
 import { router } from 'expo-router';
 import { Pressable, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
 
 import { BrutalBox } from '@/components/brutal-box';
+import { PokemonImage } from '@/components/pokemon-image';
 import { Brutal, useBrutalTheme } from '@/constants/brutal';
 import { artworkUrl, formLabel, idFromUrl } from '@/features/pokemon/pokemon-utils';
 import type { PokemonSpecies } from '@/features/pokemon/types';
@@ -46,11 +46,7 @@ export function PokemonForms({ species, currentName }: Props) {
               }>
               {({ pressed }) => (
                 <BrutalBox pressed={pressed} style={styles.card}>
-                  <Image
-                    source={artworkUrl(idFromUrl(pokemon.url))}
-                    style={styles.image}
-                    contentFit="contain"
-                  />
+                  <PokemonImage uri={artworkUrl(idFromUrl(pokemon.url))} style={styles.image} />
                   <Text style={[styles.name, { color: theme.text }]} numberOfLines={2}>
                     {label.toUpperCase()}
                   </Text>

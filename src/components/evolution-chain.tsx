@@ -1,7 +1,7 @@
-import { Image } from 'expo-image';
 import { router } from 'expo-router';
 import { Pressable, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
 
+import { PokemonImage } from '@/components/pokemon-image';
 import { BrutalBox } from '@/components/brutal-box';
 import { Sticker } from '@/components/sticker';
 import { Brutal, useBrutalTheme } from '@/constants/brutal';
@@ -71,7 +71,7 @@ function EvolutionCard({ step, width, isCurrent }: CardProps) {
       color={isCurrent ? theme.yellow : theme.surface}
       pressed={pressed}
       style={styles.card}>
-      <Image source={step.pokemon.imageUrl} style={styles.image} contentFit="contain" />
+      <PokemonImage uri={step.pokemon.imageUrl} style={styles.image} />
       <Text
         style={[styles.name, { color: isCurrent ? theme.textOnColor : theme.text }]}
         numberOfLines={1}>

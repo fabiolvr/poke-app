@@ -1,7 +1,7 @@
-import { Image } from 'expo-image';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { PokemonImage } from '@/components/pokemon-image';
 import { BrutalBox } from '@/components/brutal-box';
 import { BrutalButton } from '@/components/brutal-button';
 import { FactBox } from '@/components/fact-box';
@@ -107,7 +107,7 @@ type ContenderProps = {
 function Contender({ pokemon, fill, text }: ContenderProps) {
   return (
     <BrutalBox color={fill} style={styles.contender}>
-      <Image source={artworkUrl(pokemon.id)} style={styles.image} contentFit="contain" />
+      <PokemonImage uri={artworkUrl(pokemon.id)} style={styles.image} />
       <Text style={[styles.name, { color: text }]} numberOfLines={1}>
         {formatName(pokemon).toUpperCase()}
       </Text>
