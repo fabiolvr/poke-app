@@ -24,12 +24,15 @@ Bordas grossas, sombras duras e cores chapadas, com os dados da [PokéAPI](https
     <td align="center"><img src="docs/screenshots/pokedex.jpg" width="170" alt="Grade da Pokédex"><br><sub><b>Pokédex</b></sub></td>
     <td align="center"><img src="docs/screenshots/filtro-por-tipo.jpg" width="170" alt="Busca com a folha de tipos aberta"><br><sub><b>Busca e filtro por tipo</b></sub></td>
     <td align="center"><img src="docs/screenshots/detalhes.jpg" width="170" alt="Detalhes do Pikachu"><br><sub><b>Detalhes</b></sub></td>
-    <td align="center"><img src="docs/screenshots/formas.jpg" width="170" alt="Formas do Charizard: Mega X, Mega Y e Gigantamax"><br><sub><b>Formas</b></sub></td>
   </tr>
   <tr>
+    <td align="center"><img src="docs/screenshots/formas.jpg" width="170" alt="Formas do Charizard: Mega X, Mega Y e Gigantamax"><br><sub><b>Formas</b></sub></td>
     <td align="center"><img src="docs/screenshots/evolucoes.jpg" width="170" alt="Linha evolutiva do Eevee com os itens em português"><br><sub><b>Linha evolutiva</b></sub></td>
     <td align="center"><img src="docs/screenshots/comparacao.jpg" width="170" alt="Comparação entre Vaporeon e Jolteon"><br><sub><b>Comparar status</b></sub></td>
+  </tr>
+  <tr>
     <td align="center"><img src="docs/screenshots/tema-escuro.jpg" width="170" alt="Pokédex no tema escuro"><br><sub><b>Tema escuro</b></sub></td>
+    <td align="center"><img src="docs/screenshots/sem-internet.jpg" width="170" alt="Pokédex sem internet, com o aviso acima das abas"><br><sub><b>Sem internet</b></sub></td>
     <td align="center"><img src="docs/screenshots/splash.jpg" width="170" alt="Splash amarela com a Poké Bola"><br><sub><b>Splash</b></sub></td>
   </tr>
 </table>
@@ -71,6 +74,16 @@ No terminal do Expo, aperte `i` para o simulador do iOS ou `a` para o emulador A
 
 🔍 **Reactotron (opcional):** abra o app de desktop [Reactotron](https://github.com/infinitered/reactotron/releases) antes do `yarn expo start` para ver as actions do Redux, o estado da store, as requisições à PokéAPI e os `console.log`. Ele só é carregado em desenvolvimento e se conecta sozinho, no simulador, no emulador ou no celular.
 
+## 📦 Gerar um APK
+
+O build usa o [EAS](https://docs.expo.dev/build/introduction/), configurado em `eas.json`. O perfil `preview` gera um **APK** para instalar direto no emulador ou no celular (o `production` gera o `.aab` da Play Store). Com `--local`, o build roda na sua máquina:
+
+```bash
+npx eas-cli@latest build -p android --profile preview --local
+```
+
+Para instalar no emulador, arraste o `.apk` para a janela dele ou use `adb install arquivo.apk`. O identificador do app é `com.fabio.dev.pokeapp`, no Android e no iOS. Os arquivos gerados (`.apk`, `.aab`, `.ipa`) ficam fora do git.
+
 ## ✅ Antes de terminar uma mudança
 
 ```bash
@@ -83,7 +96,7 @@ yarn test          # testes unitários (Jest, cerca de 1 s)
 
 **Unitários (Jest):** ficam em [`__tests__/`](__tests__) e cobrem as regras sem tela: nomes e rótulos das formas, busca, linha evolutiva, traduções, favoritos e a cópia offline das respostas. Rodam em cerca de 1 segundo com `yarn test`.
 
-**Ponta a ponta (Maestro):** usam o [Maestro](https://maestro.dev/) e ficam em [`.maestro/`](.maestro/README.md). Lá também está o script 🎬 que grava o vídeo de demonstração no simulador do iOS.
+**Ponta a ponta (Maestro):** usam o [Maestro](https://maestro.dev/) e ficam em [`.maestro/`](.maestro/README.md). Lá também estão o fluxo 📴 sem internet (`.maestro/offline/`, que roda à parte) e o script 🎬 que grava o vídeo de demonstração no simulador do iOS.
 
 ```bash
 maestro test -e APP_ID=host.exp.Exponent -e EXPO_URL=exp://127.0.0.1:8081 .maestro
@@ -100,9 +113,9 @@ src/
 ├─ components/     peças visuais (BrutalBox, PokemonCard, SearchBar…)
 ├─ constants/      tokens do estilo e cores dos tipos
 ├─ features/
-│  ├─ pokemon/     cliente da PokéAPI, tipos e funções de apoio
+│  ├─ pokemon/     cliente da PokéAPI, cópia offline das respostas, traduções e funções de apoio
 │  └─ favorites/   slice e persistência dos favoritos
-├─ hooks/
+├─ hooks/          tema, cabeçalho e conexão com a internet
 └─ store/          store do Redux, hooks tipados e Reactotron
 ```
 
