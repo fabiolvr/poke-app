@@ -43,3 +43,9 @@ yarn-error.*
 
 # capturas dos fluxos Maestro
 .maestro/capturas/
+
+# builds locais do EAS
+*.aab
+*.apk
+*.ipa
+*.tar.gz
