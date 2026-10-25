@@ -1,5 +1,6 @@
 import { Stack } from 'expo-router';
 
+import { HeaderLogoTitle } from '@/components/header-logo-title';
 import { useBrutalHeaderOptions } from '@/hooks/use-brutal-header-options';
 
 export default function PokedexLayout() {
@@ -7,7 +8,13 @@ export default function PokedexLayout() {
 
   return (
     <Stack screenOptions={headerOptions}>
-      <Stack.Screen name="index" options={{ title: 'POKÉDEX' }} />
+      <Stack.Screen
+        name="index"
+        options={{
+          title: 'POKÉDEX',
+          headerTitle: ({ children }) => <HeaderLogoTitle title={children} />,
+        }}
+      />
     </Stack>
   );
 }
