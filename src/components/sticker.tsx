@@ -26,7 +26,11 @@ export function Sticker({ label, color, textColor, tilt = -3, size = 'regular', 
           size === 'small' && styles.small,
           { color: textColor ?? theme.textOnColor },
         ]}
-        numberOfLines={1}>
+        numberOfLines={1}
+        // No tamanho pequeno a largura é apertada: reduz a fonte em vez de cortar o texto
+        // ("Pedra do Trovão" na linha evolutiva).
+        adjustsFontSizeToFit={size === 'small'}
+        minimumFontScale={0.7}>
         {label}
       </Text>
     </BrutalBox>

@@ -25,7 +25,7 @@ name: Pokédex, detalhes e favoritos
 
 # Detalhes
 - tapOn: "Pikachu.*"
-- assertVisible: "Electric"
+- assertVisible: "Elétrico"
 - assertVisible: "Altura: 0.4 m"
 - assertVisible: "Peso: 6.0 kg"
 # Favorita só se ainda não estiver; o fluxo pode rodar várias vezes.

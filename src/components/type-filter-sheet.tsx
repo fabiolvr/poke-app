@@ -4,7 +4,7 @@ import { Pressable, StyleSheet, Text, useWindowDimensions, View } from 'react-na
 import { TypeBadge } from '@/components/type-badge';
 import { Brutal, useBrutalTheme } from '@/constants/brutal';
 import { TYPE_NAMES } from '@/constants/type-colors';
-import { capitalize } from '@/features/pokemon/pokemon-utils';
+import { typeName } from '@/features/pokemon/translations';
 
 const SHEET_PADDING = 24;
 
@@ -30,7 +30,7 @@ export function TypeFilterSheet({ isPresented, onDismiss, onSelect }: Props) {
                 <Pressable
                   key={type}
                   accessibilityRole="button"
-                  accessibilityLabel={`Tipo ${capitalize(type)}`}
+                  accessibilityLabel={`Tipo ${typeName(type)}`}
                   hitSlop={4}
                   onPress={() => onSelect(type)}>
                   <TypeBadge type={type} tilt={index % 2 === 0 ? -3 : 3} />

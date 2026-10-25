@@ -9,7 +9,7 @@ import { SearchBar } from '@/components/search-bar';
 import { TypeBadge } from '@/components/type-badge';
 import { TypeFilterSheet } from '@/components/type-filter-sheet';
 import { Brutal, useBrutalTheme } from '@/constants/brutal';
-import { capitalize } from '@/features/pokemon/pokemon-utils';
+import { typeName } from '@/features/pokemon/translations';
 import { usePokedexSource } from '@/features/pokemon/use-pokedex-source';
 
 export default function PokedexScreen() {
@@ -65,7 +65,7 @@ export default function PokedexScreen() {
         }
         ListEmptyComponent={
           <Text style={[styles.empty, { color: theme.text }]}>
-            Nenhum Pokémon com “{query.trim()}”{type ? ` do tipo ${capitalize(type)}` : ''}.
+            Nenhum Pokémon com “{query.trim()}”{type ? ` do tipo ${typeName(type)}` : ''}.
           </Text>
         }
         ListFooterComponent={
@@ -85,7 +85,7 @@ export default function PokedexScreen() {
           {type ? (
             <Pressable
               accessibilityRole="button"
-              accessibilityLabel={`Remover filtro ${capitalize(type)}`}
+              accessibilityLabel={`Remover filtro ${typeName(type)}`}
               onPress={() => setType(null)}
               style={styles.activeType}>
               <TypeBadge type={type} />

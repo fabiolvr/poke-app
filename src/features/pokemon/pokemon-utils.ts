@@ -6,6 +6,7 @@ import type {
   PokemonSpecies,
   PokemonSummary,
 } from './types';
+import { itemName, triggerName } from './translations';
 
 // Megas, formas regionais e afins têm id acima de 10000 e ficam fora da Pokédex.
 const FIRST_ALTERNATE_FORM_ID = 10000;
@@ -87,7 +88,7 @@ export function describeEvolution(detail: EvolutionDetail | undefined) {
     return `Nv. ${detail.min_level}`;
   }
   if (detail.item) {
-    return capitalize(detail.item.name.replace(/-/g, ' '));
+    return itemName(detail.item.name);
   }
   if (detail.trigger.name === 'trade') {
     return 'Troca';
@@ -95,7 +96,7 @@ export function describeEvolution(detail: EvolutionDetail | undefined) {
   if (detail.min_happiness) {
     return 'Amizade';
   }
-  return capitalize(detail.trigger.name.replace(/-/g, ' '));
+  return triggerName(detail.trigger.name);
 }
 
 // Achata a árvore da API em estágios: [[Eevee], [Vaporeon, Jolteon, …]].

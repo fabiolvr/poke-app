@@ -16,7 +16,7 @@ name: Formas alternativas nos detalhes
 - assertVisible: "Forma Gigantamax"
 - takeScreenshot: .maestro/capturas/formas-01-charizard
 - tapOn: "Forma Mega X"
-- assertVisible: "Dragon"
+- assertVisible: "Dragão"
 - assertVisible: "Forma"
 - takeScreenshot: .maestro/capturas/formas-02-mega-x
 # Da Mega X dá para voltar à forma padrão pela mesma seção.
@@ -37,5 +37,5 @@ name: Formas alternativas nos detalhes
     element: "Forma Alola"
     direction: DOWN
 - tapOn: "Forma Alola"
-- assertVisible: "Psychic"
+- assertVisible: "Psíquico"
 - takeScreenshot: .maestro/capturas/formas-03-raichu-alola

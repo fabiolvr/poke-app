@@ -39,12 +39,12 @@ name: Vídeo de demonstração (parte 1, tema claro)
     visible: "PAUSA_DEMO"
     timeout: 2500
     optional: true
-- tapOn: "Tipo Fire"
+- tapOn: "Tipo Fogo"
 - extendedWaitUntil:
     visible: "PAUSA_DEMO"
     timeout: 2500
     optional: true
-- tapOn: "Remover filtro Fire"
+- tapOn: "Remover filtro Fogo"
 - extendedWaitUntil:
     visible: "PAUSA_DEMO"
     timeout: 1500

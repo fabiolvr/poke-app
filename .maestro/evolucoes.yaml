@@ -17,10 +17,10 @@ name: Busca, filtro por tipo, evoluções e comparação
 - tapOn: "Filtrar por tipo"
 - assertVisible: "FILTRAR POR TIPO"
 - takeScreenshot: .maestro/capturas/evolucoes-02-folha-tipos
-- tapOn: "Tipo Fire"
-- assertVisible: "Remover filtro Fire"
+- tapOn: "Tipo Fogo"
+- assertVisible: "Remover filtro Fogo"
 - assertVisible: "Charmander.*"
-- tapOn: "Remover filtro Fire"
+- tapOn: "Remover filtro Fogo"
 - tapOn: "Limpar busca"
 - assertVisible: "Bulbasaur.*"
 
@@ -36,7 +36,7 @@ name: Busca, filtro por tipo, evoluções e comparação
     visibilityPercentage: 50
 - takeScreenshot: .maestro/capturas/evolucoes-03-linha-evolutiva
 - tapOn: "Vaporeon.*"
-- assertVisible: "Water"
+- assertVisible: "Água"
 
 # Comparação: Vaporeon e Jolteon somam 525 cada.
 - scrollUntilVisible:
