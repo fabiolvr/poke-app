@@ -6035,6 +6035,11 @@ metro@0.87.1, metro@^0.87.1:
     ws "^7.5.10"
     yargs "^17.6.2"
 
+microdiff@^1.5.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/microdiff/-/microdiff-1.6.0.tgz#5a205ff44ab63c2eea7761b1578b6c0e2d4d119b"
+  integrity sha512-w7JWt8Bno6I8h0rEqlxr4lNG4UbT1FVtWo42wWosIiaJ+rP3pXh7shCYDnyqBrYx36LJ1CZ64p8A62aVp0sJpQ==
+
 micromatch@^4.0.4:
   version "4.0.8"
   resolved "https://registry.yarnpkg.com/micromatch/-/micromatch-4.0.8.tgz#d66fa18f3a47076789320b9b1af32bd86d9fa202"
@@ -6112,6 +6117,11 @@ minimist@^1.2.0, minimist@^1.2.6:
   version "7.1.3"
   resolved "https://registry.yarnpkg.com/minipass/-/minipass-7.1.3.tgz#79389b4eb1bb2d003a9bba87d492f2bd37bdc65b"
   integrity sha512-tEBHqDnIoM/1rXME1zgka9g6Q2lcoCkxHLuc7ODJ5BxbP5d4c2Z5cGgtXAku59200Cx7diuHTOYfSBD8n6mm8A==
+
+mitt@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/mitt/-/mitt-3.0.1.tgz#ea36cf0cc30403601ae074c8f77b7092cdab36d1"
+  integrity sha512-vKivATfr97l2/QBCYAkXYDbrIWPM2IIKEl7YPhjCvKlG3kE2gm+uBo6nEXK3M5/Ffh/FLpKExzOQ3JJoJGFKBw==
 
 ms@2.0.0:
   version "2.0.0"
@@ -6841,6 +6851,34 @@ react@19.3.0:
   version "19.3.0"
   resolved "https://registry.yarnpkg.com/react/-/react-19.3.0.tgz#e20aa3a14687075ce863351b5878b0608c3fbfb2"
   integrity sha512-E8LUcbtBWt20bbl2YoHfx4ZDBdxVTfOKtCZn9cDSJ4l6/nuoApcpIBcj47t2wZoVX8g2ZHuMHbiShgCR1T5Sog==
+
+reactotron-core-client@2.10.0:
+  version "2.10.0"
+  resolved "https://registry.yarnpkg.com/reactotron-core-client/-/reactotron-core-client-2.10.0.tgz#494e6e56bb018774a0a63c797d48b53ac6986256"
+  integrity sha512-mOzkc1Rb4sN98OLY/frkP0e1A60bTFjuXUgG8D4m+pwCcjVCWZupdSFV8c5+gqcZBnreoVR20/ko6D8X/7KPvg==
+  dependencies:
+    reactotron-core-contract "0.4.0"
+
+reactotron-core-contract@0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/reactotron-core-contract/-/reactotron-core-contract-0.4.0.tgz#7227fe19be6b564c083318798bdf88af943ca995"
+  integrity sha512-o7m4mSzaUM/IGDc1dBfe0q6rgSi7mZCP7FCs3kHF7AJQwXBOKx/awjVaeNVqz+w6ADiw7X4dtDdQvEROAXdD3w==
+
+reactotron-react-native@^5.3.1:
+  version "5.3.1"
+  resolved "https://registry.yarnpkg.com/reactotron-react-native/-/reactotron-react-native-5.3.1.tgz#ca8f3f6cf475f7571c8402e025a21b070c7a427e"
+  integrity sha512-kIXJ5bgYiWo0YNHr6gjq0LtDCVCmEs0Fgvf7dL6mDDprRKywifM0wkJX7tMoLvbxn2B9Xcm2wK8EPkx2wsNmXg==
+  dependencies:
+    mitt "^3.0.1"
+    reactotron-core-client "2.10.0"
+    reactotron-core-contract "0.4.0"
+
+reactotron-redux@^3.2.1:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/reactotron-redux/-/reactotron-redux-3.2.1.tgz#3512f3d44d458e25ca65176c3d93243415bc8aa0"
+  integrity sha512-WxMVz1zBlzWplS3HJU1kDH1LBaTE71i/mMdyRTZZrAQq33+SKd7hva03pMbd6UJFaQeSCvey26a2SSWp5CLsWg==
+  dependencies:
+    microdiff "^1.5.0"
 
 redux-thunk@^3.1.0:
   version "3.1.0"

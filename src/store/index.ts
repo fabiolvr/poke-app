@@ -31,6 +31,14 @@ export const store = configureStore({
     })
       .prepend(favoritesListener.middleware)
       .concat(pokemonApi.middleware),
+  // Reactotron mostra actions e estado da store no app de desktop. O require dentro do
+  // __DEV__ deixa a biblioteca fora do build de produção.
+  enhancers: (getDefaultEnhancers) => {
+    if (!__DEV__) return getDefaultEnhancers();
+    // eslint-disable-next-line @typescript-eslint/no-require-imports -- import condicional de propósito
+    const { reactotron } = require('./reactotron') as typeof import('./reactotron');
+    return getDefaultEnhancers().concat(reactotron.createEnhancer());
+  },
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
