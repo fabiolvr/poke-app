@@ -1,0 +1,38 @@
+appId: ${APP_ID}
+name: Configurações de tema e idioma
+---
+- runFlow: subflows/abrir-app.yaml
+
+# Tema escuro e inglês, trocados na hora.
+- tapOn: "Configurações"
+- assertVisible: "CONFIGURAÇÕES"
+- tapOn: "Escuro"
+- tapOn: "English"
+- assertVisible: "SETTINGS"
+- assertVisible: "THEME"
+- takeScreenshot: .maestro/capturas/configuracoes-01-ingles-escuro
+- runFlow: subflows/voltar.yaml
+- assertVisible: "Search by name"
+
+# Reaberto, o app continua em inglês; os tipos usam os nomes da API.
+- runFlow: subflows/abrir-app.yaml
+- assertVisible: "Search by name"
+- tapOn: "Filter by type"
+- tapOn: "Fire type"
+- assertVisible: "Remove Fire filter"
+- tapOn: "Remove Fire filter"
+- tapOn: "Favorites"
+- assertVisible: "SORT BY"
+
+# Volta tudo para Sistema. Primeiro o idioma (segundo "System" da tela), depois o tema.
+- tapOn: "Settings"
+- tapOn:
+    text: "System"
+    index: 1
+- assertVisible: "CONFIGURAÇÕES"
+- tapOn:
+    text: "Sistema"
+    index: 0
+- takeScreenshot: .maestro/capturas/configuracoes-02-sistema
+- runFlow: subflows/voltar.yaml
+- assertVisible: "ORDENAR POR"
