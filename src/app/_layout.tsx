@@ -9,7 +9,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useColorScheme } from 'react-native';
 import { Provider } from 'react-redux';
 
-import { AnimatedSplashOverlay } from '@/components/animated-icon';
+import { SplashOverlay } from '@/components/splash-overlay';
 import { useBrutalTheme } from '@/constants/brutal';
 import { useBrutalHeaderOptions } from '@/hooks/use-brutal-header-options';
 import { store } from '@/store';
@@ -40,7 +40,7 @@ export default function RootLayout() {
   return (
     <Provider store={store}>
       <ThemeProvider value={navigationTheme}>
-        <AnimatedSplashOverlay />
+        <SplashOverlay />
         <Stack screenOptions={headerOptions}>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="pokemon/[name]" options={{ title: '' }} />
