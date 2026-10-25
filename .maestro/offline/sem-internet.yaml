@@ -1,0 +1,95 @@
+appId: ${APP_ID}
+name: Sem internet
+---
+# Usa o que a suíte normal deixou salvo no aparelho (rode `maestro test .maestro` antes, com internet):
+# primeiras páginas, lista completa, tipo Fogo, Eevee, Vaporeon, Jolteon e o Pikachu nos favoritos.
+# Android: o próprio fluxo liga e desliga o modo avião. iOS: desligue o Wi-Fi do Mac antes (veja o README).
+- runFlow:
+    when:
+      platform: Android
+    commands:
+      - setAirplaneMode: enabled
+- runFlow: ../subflows/abrir-app.yaml
+- assertVisible: "Sem internet · mostrando o que está salvo"
+- takeScreenshot: .maestro/capturas/offline-01-grade
+
+# Rola além das páginas salvas: a grade continua, sem trocar pela mensagem de erro.
+- repeat:
+    times: 25
+    commands:
+      - scroll
+- assertNotVisible: "Sem internet, e esta lista.*"
+- assertVisible: ".*, número .*"
+- takeScreenshot: .maestro/capturas/offline-02-fim-do-salvo
+# Volta ao topo reabrindo o app (de novo sem rede).
+- runFlow: ../subflows/abrir-app.yaml
+
+# Puxar para atualizar sem rede: as páginas voltam da cópia.
+- swipe:
+    start: 50%, 35%
+    end: 50%, 85%
+- extendedWaitUntil:
+    visible: "Bulbasaur.*"
+    timeout: 20000
+- assertNotVisible: "Sem internet, e esta lista.*"
+
+# Busca (lista completa salva) e detalhes com linha evolutiva.
+- tapOn: "Buscar por nome"
+- inputText: "eevee"
+- hideKeyboard:
+    optional: true
+- tapOn: "Eevee, número 133"
+- scrollUntilVisible:
+    element: "Vaporeon.*"
+    direction: DOWN
+    visibilityPercentage: 50
+- tapOn: "Vaporeon.*"
+- assertVisible: "Água"
+
+# Comparação com um adversário já aberto.
+- tapOn: "Comparar status"
+- tapOn: "Buscar adversário"
+- inputText: "jolteon"
+- hideKeyboard:
+    optional: true
+- tapOn: "Jolteon, número 135"
+- scrollUntilVisible:
+    element: "Empate: os dois somam 525."
+    direction: DOWN
+- takeScreenshot: .maestro/capturas/offline-03-comparacao
+- runFlow: ../subflows/voltar.yaml
+- runFlow: ../subflows/voltar.yaml
+- runFlow: ../subflows/voltar.yaml
+- tapOn: "Limpar busca"
+
+# Tipo já aberto (Fogo) vem da cópia; tipo nunca aberto (Gelo) mostra a mensagem.
+- tapOn: "Filtrar por tipo"
+- tapOn: "Tipo Fogo"
+- assertVisible: "Charmander.*"
+- tapOn: "Remover filtro Fogo"
+- tapOn: "Filtrar por tipo"
+- tapOn: "Tipo Gelo"
+- assertVisible: "Sem internet, e esta lista ainda não foi aberta neste aparelho."
+- takeScreenshot: .maestro/capturas/offline-04-tipo-nao-salvo
+- tapOn: "Remover filtro Gelo"
+- assertVisible: "Bulbasaur.*"
+
+# Pokémon nunca aberto.
+- openLink: ${EXPO_URL}/--/pokemon/mew
+- assertVisible: "Sem internet, e este Pokémon ainda não foi aberto neste aparelho."
+- runFlow: ../subflows/voltar.yaml
+
+# Favoritos
+- tapOn: "Favoritos"
+- assertVisible: "Pikachu.*"
+- assertVisible: "Sem internet · mostrando o que está salvo"
+- takeScreenshot: .maestro/capturas/offline-05-favoritos
+
+- runFlow:
+    when:
+      platform: Android
+    commands:
+      - setAirplaneMode: disabled
+      - extendedWaitUntil:
+          notVisible: "Sem internet · mostrando o que está salvo"
+          timeout: 30000
