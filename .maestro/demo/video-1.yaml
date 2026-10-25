@@ -1,0 +1,145 @@
+appId: ${APP_ID}
+name: Vídeo de demonstração (parte 1, tema claro)
+---
+- extendedWaitUntil:
+    visible: "PAUSA_DEMO"
+    timeout: 2500
+    optional: true
+- scroll
+- extendedWaitUntil:
+    visible: "PAUSA_DEMO"
+    timeout: 1200
+    optional: true
+- scroll
+- extendedWaitUntil:
+    visible: "PAUSA_DEMO"
+    timeout: 1500
+    optional: true
+- scrollUntilVisible:
+    element: "Bulbasaur.*"
+    direction: UP
+- extendedWaitUntil:
+    visible: "PAUSA_DEMO"
+    timeout: 1200
+    optional: true
+- tapOn: "Buscar por nome"
+- extendedWaitUntil:
+    visible: "PAUSA_DEMO"
+    timeout: 500
+    optional: true
+- inputText: "char"
+- hideKeyboard
+- extendedWaitUntil:
+    visible: "PAUSA_DEMO"
+    timeout: 2500
+    optional: true
+- tapOn: "Filtrar por tipo"
+- extendedWaitUntil:
+    visible: "PAUSA_DEMO"
+    timeout: 2500
+    optional: true
+- tapOn: "Tipo Fire"
+- extendedWaitUntil:
+    visible: "PAUSA_DEMO"
+    timeout: 2500
+    optional: true
+- tapOn: "Remover filtro Fire"
+- extendedWaitUntil:
+    visible: "PAUSA_DEMO"
+    timeout: 1500
+    optional: true
+- tapOn: "Charizard, número 6.*"
+- extendedWaitUntil:
+    visible: "PAUSA_DEMO"
+    timeout: 3000
+    optional: true
+- runFlow:
+    when:
+      visible: "Favoritar"
+    commands:
+      - tapOn: "Favoritar"
+- extendedWaitUntil:
+    visible: "PAUSA_DEMO"
+    timeout: 2000
+    optional: true
+- scroll
+- extendedWaitUntil:
+    visible: "PAUSA_DEMO"
+    timeout: 2500
+    optional: true
+- scrollUntilVisible:
+    element: "Habilidades"
+    direction: DOWN
+- tapOn: "Habilidades"
+- extendedWaitUntil:
+    visible: "PAUSA_DEMO"
+    timeout: 2000
+    optional: true
+- scrollUntilVisible:
+    element: "Charmander.*"
+    direction: DOWN
+    visibilityPercentage: 100
+- extendedWaitUntil:
+    visible: "PAUSA_DEMO"
+    timeout: 3000
+    optional: true
+- scrollUntilVisible:
+    element: "Comparar status"
+    direction: UP
+- extendedWaitUntil:
+    visible: "PAUSA_DEMO"
+    timeout: 800
+    optional: true
+- tapOn: "Comparar status"
+- extendedWaitUntil:
+    visible: "PAUSA_DEMO"
+    timeout: 1500
+    optional: true
+- tapOn: "Buscar adversário"
+- extendedWaitUntil:
+    visible: "PAUSA_DEMO"
+    timeout: 400
+    optional: true
+- inputText: "blastoise"
+- hideKeyboard
+- extendedWaitUntil:
+    visible: "PAUSA_DEMO"
+    timeout: 1500
+    optional: true
+- tapOn: "Blastoise, número 9"
+- extendedWaitUntil:
+    visible: "PAUSA_DEMO"
+    timeout: 3000
+    optional: true
+- scroll
+- extendedWaitUntil:
+    visible: "PAUSA_DEMO"
+    timeout: 1500
+    optional: true
+- scrollUntilVisible:
+    element: "Charizard vence no total: 534 contra 530."
+    direction: DOWN
+- extendedWaitUntil:
+    visible: "PAUSA_DEMO"
+    timeout: 3000
+    optional: true
+- runFlow: ../subflows/voltar.yaml
+- extendedWaitUntil:
+    visible: "PAUSA_DEMO"
+    timeout: 1200
+    optional: true
+- runFlow: ../subflows/voltar.yaml
+- extendedWaitUntil:
+    visible: "PAUSA_DEMO"
+    timeout: 1200
+    optional: true
+- tapOn: "Limpar busca"
+- extendedWaitUntil:
+    visible: "PAUSA_DEMO"
+    timeout: 1500
+    optional: true
+- tapOn: "Favoritos"
+- extendedWaitUntil:
+    visible: "PAUSA_DEMO"
+    timeout: 3000
+    optional: true

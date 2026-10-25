@@ -1,0 +1,14 @@
+appId: ${APP_ID}
+---
+# O iOS não tem botão voltar do sistema: toca na seta do cabeçalho.
+- runFlow:
+    when:
+      platform: iOS
+    commands:
+      - tapOn:
+          point: "9%,9%"
+- runFlow:
+    when:
+      platform: Android
+    commands:
+      - back

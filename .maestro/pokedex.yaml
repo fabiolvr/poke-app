@@ -1,0 +1,48 @@
+appId: ${APP_ID}
+name: Pokédex, detalhes e favoritos
+---
+- runFlow: subflows/abrir-app.yaml
+
+# Grade com paginação: o Clefairy (#0035) só chega na segunda página.
+- takeScreenshot: .maestro/capturas/pokedex-01-grade
+- scrollUntilVisible:
+    element: "Pikachu.*"
+    direction: DOWN
+    timeout: 30000
+    visibilityPercentage: 50
+- scrollUntilVisible:
+    element: "Clefairy.*"
+    direction: DOWN
+    timeout: 30000
+    visibilityPercentage: 50
+- scrollUntilVisible:
+    element: "Pikachu.*"
+    direction: UP
+    timeout: 30000
+    visibilityPercentage: 50
+    centerElement: true
+
+# Detalhes
+- tapOn: "Pikachu.*"
+- assertVisible: "Electric"
+- assertVisible: "Altura: 0.4 m"
+- assertVisible: "Peso: 6.0 kg"
+# Favorita só se ainda não estiver; o fluxo pode rodar várias vezes.
+- runFlow:
+    when:
+      visible: "Favoritar"
+    commands:
+      - tapOn: "Favoritar"
+- assertVisible: "Remover dos favoritos"
+- takeScreenshot: .maestro/capturas/pokedex-02-detalhes
+- scrollUntilVisible:
+    element: "Habilidades"
+    direction: DOWN
+- tapOn: "Habilidades"
+- assertVisible: "Static"
+- runFlow: subflows/voltar.yaml
+
+# Favoritos
+- tapOn: "Favoritos"
+- assertVisible: "Pikachu.*"
+- takeScreenshot: .maestro/capturas/pokedex-03-favoritos

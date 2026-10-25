@@ -1,0 +1,12 @@
+appId: ${APP_ID}
+name: Vídeo de demonstração (parte 2, tema escuro)
+---
+- extendedWaitUntil:
+    visible: "PAUSA_DEMO"
+    timeout: 2500
+    optional: true
+- tapOn: "Pokédex"
+- extendedWaitUntil:
+    visible: "PAUSA_DEMO"
+    timeout: 3000
+    optional: true

@@ -1,0 +1,20 @@
+appId: ${APP_ID}
+---
+# Fecha o Expo Go e abre o projeto do zero, sem o botão flutuante de ferramentas.
+- stopApp
+# Pausa de ~1,5 s: no Android, abrir o link logo depois de fechar o app às vezes não abre nada.
+- extendedWaitUntil:
+    visible: "PAUSA"
+    timeout: 1500
+    optional: true
+- openLink: ${EXPO_URL}?__expo_disable_fab=1
+- runFlow:
+    when:
+      visible: "Reload"
+    commands:
+      # Menu de desenvolvimento do Expo Go aberto: fecha no X do canto superior direito.
+      - tapOn:
+          point: "92%,11%"
+- extendedWaitUntil:
+    visible: "Bulbasaur.*"
+    timeout: 60000

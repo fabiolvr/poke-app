@@ -1,0 +1,52 @@
+appId: ${APP_ID}
+name: Busca, filtro por tipo, evoluções e comparação
+---
+- runFlow: subflows/abrir-app.yaml
+
+# Busca por nome
+- tapOn: "Buscar por nome"
+- inputText: "char"
+- assertVisible: "Charmander.*"
+- assertVisible: "Charizard.*"
+- assertNotVisible: "Bulbasaur.*"
+- hideKeyboard
+- takeScreenshot: .maestro/capturas/evolucoes-01-busca
+
+# Filtro por tipo, combinado com a busca
+- tapOn: "Filtrar por tipo"
+- assertVisible: "FILTRAR POR TIPO"
+- takeScreenshot: .maestro/capturas/evolucoes-02-folha-tipos
+- tapOn: "Tipo Fire"
+- assertVisible: "Remover filtro Fire"
+- assertVisible: "Charmander.*"
+- tapOn: "Remover filtro Fire"
+- tapOn: "Limpar busca"
+- assertVisible: "Bulbasaur.*"
+
+# Linha evolutiva. O rótulo completo evita acertar o campo de busca, que também contém "eevee".
+- tapOn: "Buscar por nome"
+- inputText: "eevee"
+- hideKeyboard
+- tapOn: "Eevee, número 133"
+- scrollUntilVisible:
+    element: "Vaporeon.*"
+    direction: DOWN
+    visibilityPercentage: 50
+- takeScreenshot: .maestro/capturas/evolucoes-03-linha-evolutiva
+- tapOn: "Vaporeon.*"
+- assertVisible: "Water"
+
+# Comparação: Vaporeon e Jolteon somam 525 cada.
+- scrollUntilVisible:
+    element: "Comparar status"
+    direction: UP
+- tapOn: "Comparar status"
+- assertVisible: "QUEM ENFRENTA VAPOREON?"
+- tapOn: "Buscar adversário"
+- inputText: "jolteon"
+- hideKeyboard
+- tapOn: "Jolteon, número 135"
+- scrollUntilVisible:
+    element: "Empate: os dois somam 525."
+    direction: DOWN
+- takeScreenshot: .maestro/capturas/evolucoes-04-comparacao
