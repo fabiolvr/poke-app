@@ -36,6 +36,11 @@ name: Pokédex, detalhes e favoritos
       - tapOn: "Favoritar"
 - assertVisible: "Remover dos favoritos"
 - takeScreenshot: .maestro/capturas/pokedex-02-detalhes
+# Elétrico: só Terrestre é fraqueza.
+- scrollUntilVisible:
+    element: "Fraqueza 2×: Terrestre"
+    direction: DOWN
+- assertVisible: "Resistência ½×: Elétrico, Voador, Aço"
 - scrollUntilVisible:
     element: "Habilidades"
     direction: DOWN

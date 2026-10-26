@@ -59,6 +59,13 @@ export const pt = {
     abilities: 'Habilidades',
     hiddenAbility: '{{ability}} (oculta)',
   },
+  matchups: {
+    title: 'FRAQUEZAS E RESISTÊNCIAS',
+    weakness: 'Fraqueza {{multiplier}}',
+    resistance: 'Resistência {{multiplier}}',
+    immunity: 'Imunidade {{multiplier}}',
+    hint: 'Dano que cada tipo de golpe causa neste Pokémon. Não considera habilidades como Levitate.',
+  },
   forms: {
     title: 'FORMAS',
     label: 'Forma {{form}}',

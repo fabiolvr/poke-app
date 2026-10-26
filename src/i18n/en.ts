@@ -60,6 +60,13 @@ export const en: Translations = {
     abilities: 'Abilities',
     hiddenAbility: '{{ability}} (hidden)',
   },
+  matchups: {
+    title: 'WEAKNESSES & RESISTANCES',
+    weakness: 'Weakness {{multiplier}}',
+    resistance: 'Resistance {{multiplier}}',
+    immunity: 'Immunity {{multiplier}}',
+    hint: 'Damage each move type deals to this Pokémon. Abilities like Levitate are not counted.',
+  },
   forms: {
     title: 'FORMS',
     label: '{{form}} form',

@@ -16,6 +16,7 @@ import { ScreenMessage } from '@/components/screen-message';
 import { StatBar } from '@/components/stat-bar';
 import { Sticker } from '@/components/sticker';
 import { TypeBadge } from '@/components/type-badge';
+import { TypeMatchups } from '@/components/type-matchups';
 import { Brutal, useBrutalTheme } from '@/constants/brutal';
 import { getTypeColor } from '@/constants/type-colors';
 import { selectIsFavorite, toggleFavorite } from '@/features/favorites/favorites-slice';
@@ -123,6 +124,8 @@ export default function PokemonDetailsScreen() {
             />
           ))}
         </BrutalBox>
+
+        <TypeMatchups types={pokemon.types.map(({ type }) => type.name)} />
 
         <BrutalAccordion title={t('details.abilities')}>
           {pokemon.abilities.map(({ ability, is_hidden }) => (
