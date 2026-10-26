@@ -49,9 +49,22 @@ name: Pokédex, detalhes e favoritos
 - scrollUntilVisible:
     element: "Static"
     direction: DOWN
+# Golpes: abre em Nível; Thunderbolt é de MT.
+- scrollUntilVisible:
+    element: "Golpes"
+    direction: DOWN
+- tapOn: "Golpes"
+- scrollUntilVisible:
+    element: "Thunder Shock"
+    direction: DOWN
+- tapOn: "MT"
+- scrollUntilVisible:
+    element: "Thunderbolt"
+    direction: DOWN
+- takeScreenshot: .maestro/capturas/pokedex-03-golpes
 - runFlow: subflows/voltar.yaml
 
 # Favoritos
 - tapOn: "Favoritos"
 - assertVisible: "Pikachu.*"
-- takeScreenshot: .maestro/capturas/pokedex-03-favoritos
+- takeScreenshot: .maestro/capturas/pokedex-04-favoritos

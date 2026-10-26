@@ -46,7 +46,7 @@ Bordas grossas, sombras duras e cores chapadas, com os dados da [PokéAPI](https
 
 - 📖 **Pokédex** em grade com as 1.025 espécies, carregada de 30 em 30 enquanto você rola. Puxar para baixo recarrega.
 - 🔎 **Busca por nome ou número** (`25` ou `#0025`) e 🏷️ **filtro por tipo**, numa folha que sobe da parte de baixo da tela. Os dois funcionam juntos.
-- 📊 **Detalhes** com arte oficial, tipos, descrição, altura e peso, status base em barras e habilidades.
+- 📊 **Detalhes** com arte oficial, tipos, descrição, altura e peso, status base em barras, habilidades e 🥊 **golpes** do jogo mais recente em que o Pokémon aparece, separados por nível, MT, ovo e tutor.
 - 🛡️ **Fraquezas e resistências** nos detalhes: o dano que cada tipo de golpe causa (4×, 2×, ½×, ¼× e imunidade), somando os dois tipos do Pokémon. Vem de uma tabela no app, então funciona sem internet.
 - 🧬 **Linha evolutiva** com o que faz cada etapa evoluir (Nv. 16, Pedra da Água, Troca…).
 - 🎭 **Formas** de cada Pokémon nos detalhes: megaevoluções, formas regionais e Gigantamax, cada uma com tipos e status próprios.
@@ -110,7 +110,7 @@ yarn test          # testes unitários (Jest, cerca de 1 s)
 
 ## 🧪 Testes
 
-**Unitários (Jest):** ficam em [`__tests__/`](__tests__) e cobrem as regras sem tela: nomes e rótulos das formas, fraquezas e resistências, busca, linha evolutiva, traduções nos dois idiomas, escolha do idioma, favoritos e a cópia offline das respostas. Rodam em cerca de 1 segundo com `yarn test`.
+**Unitários (Jest):** ficam em [`__tests__/`](__tests__) e cobrem as regras sem tela: nomes e rótulos das formas, fraquezas e resistências, golpes, busca, linha evolutiva, traduções nos dois idiomas, escolha do idioma, favoritos e a cópia offline das respostas. Rodam em cerca de 1 segundo com `yarn test`.
 
 **Ponta a ponta (Maestro):** usam o [Maestro](https://maestro.dev/) e ficam em [`.maestro/`](.maestro/README.md). Lá também estão o fluxo 📴 sem internet (`.maestro/offline/`, que roda à parte) e o script 🎬 que grava o vídeo de demonstração no simulador do iOS.
 
@@ -140,7 +140,7 @@ src/
 
 ## 📝 Observações
 
-- 🇬🇧 A PokéAPI não traz textos em português. Tipos, itens e gatilhos de evolução são traduzidos por uma tabela no app (`translations.ts`); descrições, categorias e habilidades continuam em inglês. Em inglês, tudo vem da própria API.
+- 🇬🇧 A PokéAPI não traz textos em português. Tipos, itens e gatilhos de evolução são traduzidos por uma tabela no app (`translations.ts`); descrições, categorias, habilidades e golpes continuam em inglês. Em inglês, tudo vem da própria API.
 - 🔢 Como na PokéAPI, a Pokédex, a busca e o filtro mostram só as 1.025 espécies. As 326 formas alternativas (megas, regionais, Gigantamax…) aparecem na seção Formas dos detalhes de cada espécie.
 - 🌐 O app foi testado no iOS e no Android. A versão web não foi testada.
 

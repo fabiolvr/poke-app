@@ -60,6 +60,12 @@ export const en: Translations = {
     abilities: 'Abilities',
     hiddenAbility: '{{ability}} (hidden)',
   },
+  moves: {
+    title: 'Moves',
+    game: 'In {{game}}.',
+    evolution: 'Evo.',
+    methods: { 'level-up': 'Level', machine: 'TM', egg: 'Egg', tutor: 'Tutor' },
+  },
   matchups: {
     title: 'WEAKNESSES & RESISTANCES',
     weakness: 'Weakness {{multiplier}}',

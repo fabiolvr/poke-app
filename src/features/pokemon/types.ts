@@ -19,6 +19,19 @@ export type Pokemon = {
   types: { slot: number; type: NamedResource }[];
   stats: { base_stat: number; stat: NamedResource }[];
   abilities: { is_hidden: boolean; ability: NamedResource }[];
+  moves: PokemonMove[];
+};
+
+// Como o Pokémon aprende o golpe num jogo: por nível (level-up), MT (machine), ovo, tutor…
+export type MoveLearnDetail = {
+  level_learned_at: number;
+  move_learn_method: NamedResource;
+  version_group: NamedResource;
+};
+
+export type PokemonMove = {
+  move: NamedResource;
+  version_group_details: MoveLearnDetail[];
 };
 
 export type PokemonSpecies = {

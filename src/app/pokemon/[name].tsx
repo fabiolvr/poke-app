@@ -10,6 +10,7 @@ import { BrutalAccordion } from '@/components/brutal-accordion';
 import { BrutalBox } from '@/components/brutal-box';
 import { BrutalButton } from '@/components/brutal-button';
 import { EvolutionChain } from '@/components/evolution-chain';
+import { MoveList } from '@/components/move-list';
 import { PokemonForms } from '@/components/pokemon-forms';
 import { FactBox } from '@/components/fact-box';
 import { ScreenMessage } from '@/components/screen-message';
@@ -136,6 +137,8 @@ export default function PokemonDetailsScreen() {
             </Text>
           ))}
         </BrutalAccordion>
+
+        <MoveList pokemon={pokemon} />
 
         {species ? (
           <>

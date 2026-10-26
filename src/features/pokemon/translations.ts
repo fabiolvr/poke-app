@@ -146,6 +146,11 @@ export function triggerName(trigger: string, language: Language) {
   return translate(TRIGGER_NAMES, trigger, language);
 }
 
+// Golpes ficam em inglês: a PokéAPI não traz os nomes em português.
+export function moveName(move: string) {
+  return fromSlug(move);
+}
+
 export function statName(stat: string, language: Language) {
   return STAT_NAMES[language][stat] ?? fromSlug(stat);
 }

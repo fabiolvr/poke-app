@@ -1,5 +1,6 @@
 import type { Language } from '@/i18n/language';
 
+import { slimMoves } from './moves';
 import { itemName, triggerName, word } from './translations';
 import type {
   ChainLink,
@@ -144,7 +145,8 @@ export function pickGenus(species: PokemonSpecies, language = TEXT_LANGUAGE) {
 }
 
 // Só os campos que o app usa: a resposta completa de um Pokémon passa de 200 KB por causa
-// da lista de golpes, e ela fica guardada no aparelho para o modo sem internet.
+// da lista de golpes, e ela fica guardada no aparelho para o modo sem internet. Dos golpes,
+// fica só o jogo mostrado na tela.
 export function slimPokemon({
   id,
   name,
@@ -154,8 +156,9 @@ export function slimPokemon({
   types,
   stats,
   abilities,
+  moves,
 }: Pokemon): Pokemon {
-  return { id, name, height, weight, species, types, stats, abilities };
+  return { id, name, height, weight, species, types, stats, abilities, moves: slimMoves(moves) };
 }
 
 // Mantém só os textos no idioma exibido; a API manda cada um em uma dezena de idiomas.

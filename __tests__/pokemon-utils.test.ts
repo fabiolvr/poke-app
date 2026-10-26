@@ -225,8 +225,9 @@ describe('respostas reduzidas para guardar no aparelho', () => {
       types: [],
       stats: [],
       abilities: [],
+      moves: [],
     };
-    const fromApi = { ...pokemon, moves: [{ move: resource('thunderbolt', 85, 'move') }] };
+    const fromApi = { ...pokemon, base_experience: 112, sprites: { front_default: '' } };
     expect(slimPokemon(fromApi)).toEqual(pokemon);
   });
 

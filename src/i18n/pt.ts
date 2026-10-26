@@ -59,6 +59,12 @@ export const pt = {
     abilities: 'Habilidades',
     hiddenAbility: '{{ability}} (oculta)',
   },
+  moves: {
+    title: 'Golpes',
+    game: 'Em {{game}}. Os nomes dos golpes vêm em inglês da PokéAPI.',
+    evolution: 'Evol.',
+    methods: { 'level-up': 'Nível', machine: 'MT', egg: 'Ovo', tutor: 'Tutor' },
+  },
   matchups: {
     title: 'FRAQUEZAS E RESISTÊNCIAS',
     weakness: 'Fraqueza {{multiplier}}',
@@ -94,7 +100,7 @@ export const pt = {
     language: 'IDIOMA',
     languages: { system: 'Sistema', pt: 'Português', en: 'English' },
     languageHint:
-      'Em português, habilidades, categorias e descrições continuam em inglês: a PokéAPI não traz esses textos traduzidos.',
+      'Em português, golpes, habilidades, categorias e descrições continuam em inglês: a PokéAPI não traz esses textos traduzidos.',
     data: 'DADOS SALVOS',
     dataSummary_one: '{{count}} resposta da PokéAPI · {{size}}',
     dataSummary_other: '{{count}} respostas da PokéAPI · {{size}}',
