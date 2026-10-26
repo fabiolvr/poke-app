@@ -1,5 +1,5 @@
 appId: ${APP_ID}
-name: Vídeo de demonstração (parte 1, tema claro)
+name: Vídeo de demonstração (parte 1, Pokédex em português e tema claro)
 ---
 - extendedWaitUntil:
     visible: "PAUSA_DEMO"
@@ -75,6 +75,23 @@ name: Vídeo de demonstração (parte 1, tema claro)
 - extendedWaitUntil:
     visible: "PAUSA_DEMO"
     timeout: 2000
+    optional: true
+- scrollUntilVisible:
+    element: "Forma Mega X"
+    direction: DOWN
+- extendedWaitUntil:
+    visible: "PAUSA_DEMO"
+    timeout: 1500
+    optional: true
+- tapOn: "Forma Mega X"
+- extendedWaitUntil:
+    visible: "PAUSA_DEMO"
+    timeout: 3000
+    optional: true
+- runFlow: ../subflows/voltar.yaml
+- extendedWaitUntil:
+    visible: "PAUSA_DEMO"
+    timeout: 1200
     optional: true
 - scrollUntilVisible:
     element: "Charmander.*"

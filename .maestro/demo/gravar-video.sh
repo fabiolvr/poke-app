@@ -35,10 +35,11 @@ stop_recording() {
   fi
 }
 
-# Se algum passo falhar, para a gravação e devolve o simulador ao normal (tema claro, barra de status real).
+# Ao terminar, ou se algum passo falhar, para a gravação, volta o tema e o idioma do app para
+# Sistema e devolve a barra de status real ao simulador.
 cleanup() {
   stop_recording
-  xcrun simctl ui "$UDID" appearance light
+  maestro --device "$UDID" test "${MAESTRO_ENV[@]}" restaurar-configuracoes.yaml || true
   xcrun simctl status_bar "$UDID" clear
 }
 trap cleanup EXIT
@@ -47,13 +48,14 @@ xcrun simctl status_bar "$UDID" override --time 9:41 --batteryState charged \
   --batteryLevel 100 --wifiBars 3 --cellularBars 4 --dataNetwork wifi
 xcrun simctl ui "$UDID" appearance light
 
+# O vídeo começa em português e no tema do sistema (claro), com o app aberto do zero.
+maestro --device "$UDID" test "${MAESTRO_ENV[@]}" restaurar-configuracoes.yaml
 maestro --device "$UDID" test "${MAESTRO_ENV[@]}" ../subflows/abrir-app.yaml
 
 xcrun simctl io "$UDID" recordVideo --codec=h264 --force "$RAW" &
 RECORDER=$!
 sleep 2
 maestro --device "$UDID" test "${MAESTRO_ENV[@]}" video-1.yaml
-xcrun simctl ui "$UDID" appearance dark
 maestro --device "$UDID" test "${MAESTRO_ENV[@]}" video-2.yaml
 stop_recording
 

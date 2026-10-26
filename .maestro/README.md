@@ -54,7 +54,7 @@ networksetup -setairportpower en1 on
 
 ## Vídeo de demonstração
 
-`demo/gravar-video.sh` grava o passeio pelo app no simulador do iOS (tema claro e depois escuro) e corta as pausas com `demo/cortar-pausas.py`. Requer `ffmpeg`.
+`demo/gravar-video.sh` grava o passeio pelo app no simulador do iOS e corta as pausas com `demo/cortar-pausas.py`. Requer `ffmpeg`. Primeiro a Pokédex em português e no tema claro: busca, filtro por tipo, formas, evoluções, comparação e favoritos. Depois as configurações trocam para o tema escuro e o inglês. No fim, o script devolve o tema e o idioma para Sistema.
 
 ```bash
 .maestro/demo/gravar-video.sh            # salva em ~/Documents/poke-app-demo-ios.mp4

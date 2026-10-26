@@ -1,0 +1,14 @@
+appId: ${APP_ID}
+name: Volta o tema e o idioma para Sistema depois da gravação
+---
+- runFlow: ../subflows/abrir-app.yaml
+- tapOn: "Configurações|Settings"
+# Primeiro o idioma (segundo "Sistema" da tela), depois o tema.
+- tapOn:
+    text: "Sistema|System"
+    index: 1
+- tapOn:
+    text: "Sistema"
+    index: 0
+- assertVisible: "CONFIGURAÇÕES"
+- runFlow: ../subflows/voltar.yaml

@@ -1,11 +1,65 @@
 appId: ${APP_ID}
-name: Vídeo de demonstração (parte 2, tema escuro)
+name: Vídeo de demonstração (parte 2, configurações com tema escuro e inglês)
 ---
+# Começa na aba Favoritos, onde a parte 1 termina.
+- tapOn: "Configurações"
+- extendedWaitUntil:
+    visible: "PAUSA_DEMO"
+    timeout: 2000
+    optional: true
+- tapOn: "Escuro"
+- extendedWaitUntil:
+    visible: "PAUSA_DEMO"
+    timeout: 2000
+    optional: true
+- tapOn: "English"
 - extendedWaitUntil:
     visible: "PAUSA_DEMO"
     timeout: 2500
     optional: true
+- scrollUntilVisible:
+    element: "Made with.*"
+    direction: DOWN
+    visibilityPercentage: 100
+- extendedWaitUntil:
+    visible: "PAUSA_DEMO"
+    timeout: 3000
+    optional: true
+- runFlow: ../subflows/voltar.yaml
+- extendedWaitUntil:
+    visible: "PAUSA_DEMO"
+    timeout: 2000
+    optional: true
 - tapOn: "Pokédex"
+- extendedWaitUntil:
+    visible: "PAUSA_DEMO"
+    timeout: 2000
+    optional: true
+- tapOn: "Filter by type"
+- extendedWaitUntil:
+    visible: "PAUSA_DEMO"
+    timeout: 1500
+    optional: true
+- tapOn: "Water type"
+- extendedWaitUntil:
+    visible: "PAUSA_DEMO"
+    timeout: 2500
+    optional: true
+- tapOn: "Squirtle, number 7.*"
+- extendedWaitUntil:
+    visible: "PAUSA_DEMO"
+    timeout: 2500
+    optional: true
+- scrollUntilVisible:
+    element: "Wartortle.*"
+    direction: DOWN
+    visibilityPercentage: 100
+- extendedWaitUntil:
+    visible: "PAUSA_DEMO"
+    timeout: 3000
+    optional: true
+- runFlow: ../subflows/voltar.yaml
+# Termina na grade filtrada por Água, em inglês e no tema escuro.
 - extendedWaitUntil:
     visible: "PAUSA_DEMO"
     timeout: 3000
