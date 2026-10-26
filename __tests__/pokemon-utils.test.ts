@@ -2,6 +2,7 @@ import { describe, expect, it } from '@jest/globals';
 
 import {
   artworkUrl,
+  cryUrls,
   dexLabel,
   describeEvolution,
   flattenChain,
@@ -101,6 +102,32 @@ describe('nomes e números', () => {
   it('converte altura e peso para metros e quilos', () => {
     expect(formatHeight(4)).toBe('0.4 m');
     expect(formatWeight(60)).toBe('6.0 kg');
+  });
+});
+
+describe('gritos', () => {
+  const pokemon = (name: string, id: number, species = name) => ({
+    id,
+    name,
+    species: { name: species, url: '' },
+  });
+  const cry = (name: string) => `https://play.pokemonshowdown.com/audio/cries/${name}.mp3`;
+
+  it('usa o nome da espécie sem hífen nem pontuação', () => {
+    expect(cryUrls(pokemon('pikachu', 25))).toEqual([cry('pikachu')]);
+    expect(cryUrls(pokemon('mr-mime', 122))).toEqual([cry('mrmime')]);
+    expect(cryUrls(pokemon('ho-oh', 250))).toEqual([cry('hooh')]);
+  });
+
+  it('na forma padrão com outro nome, usa a espécie', () => {
+    expect(cryUrls(pokemon('deoxys-normal', 386, 'deoxys'))).toEqual([cry('deoxys')]);
+  });
+
+  it('nas formas, tenta o grito próprio e depois o da espécie', () => {
+    expect(cryUrls(pokemon('charizard-mega-x', 10034, 'charizard'))).toEqual([
+      cry('charizard-megax'),
+      cry('charizard'),
+    ]);
   });
 });
 

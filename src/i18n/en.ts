@@ -53,6 +53,8 @@ export const en: Translations = {
     unfavorite: 'Remove from favorites',
     compare: 'Compare stats',
     shiny: 'Shiny',
+    cry: 'Play cry',
+    cryLabel: 'Cry',
     data: 'DATA',
     height: 'Height',
     weight: 'Weight',
@@ -114,7 +116,7 @@ export const en: Translations = {
     cancel: 'Cancel',
     about: 'ABOUT',
     version: 'Poke App · version {{version}}',
-    credits: 'Data and images from PokéAPI.',
+    credits: 'Data and images from PokéAPI. Cries from Pokémon Showdown.',
     openPokeApi: 'Open pokeapi.co',
     trademark:
       'Pokémon and related names are trademarks of Nintendo, Game Freak and The Pokémon Company. Personal, non-commercial project.',

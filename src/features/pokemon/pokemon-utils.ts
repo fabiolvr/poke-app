@@ -23,6 +23,23 @@ export function artworkUrl(id: number, shiny = false) {
   return `${ARTWORK_URL}${shiny ? '/shiny' : ''}/${id}.png`;
 }
 
+// Gritos em MP3 do Pokémon Showdown: os da PokéAPI são .ogg (Vorbis), que o iOS não toca.
+const CRY_URL = 'https://play.pokemonshowdown.com/audio/cries';
+
+// O Showdown nomeia pelo nome sem hífen nem pontuação ("mr-mime" → "mrmime") e as formas com
+// um hífen só ("charizard-mega-x" → "charizard-megax"). Formas sem grito próprio, como as
+// regionais, usam o da espécie: a lista vem em ordem de preferência.
+export function cryUrls(pokemon: Pick<Pokemon, 'id' | 'name' | 'species'>) {
+  const id = (slug: string) => slug.replace(/[^a-z0-9]/g, '');
+  const species = pokemon.species.name;
+  const url = (name: string) => `${CRY_URL}/${name}.mp3`;
+  if (isDexEntry(pokemon) || !pokemon.name.startsWith(`${species}-`)) {
+    return [url(id(species))];
+  }
+  const form = pokemon.name.slice(species.length + 1);
+  return [url(`${id(species)}-${id(form)}`), url(id(species))];
+}
+
 // A URL termina com o id: https://pokeapi.co/api/v2/pokemon/25/
 export function idFromUrl(url: string) {
   return Number(url.split('/').filter(Boolean).pop());

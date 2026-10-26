@@ -46,6 +46,13 @@ name: Pokédex, detalhes e favoritos
 - assertVisible:
     text: "Shiny"
     checked: false
+# Grito: o adesivo só aparece depois que o áudio carrega.
+- extendedWaitUntil:
+    visible:
+      text: "Ouvir o grito"
+      enabled: true
+    timeout: 10000
+- tapOn: "Ouvir o grito"
 # Elétrico: só Terrestre é fraqueza.
 - scrollUntilVisible:
     element: "Fraqueza 2×: Terrestre"

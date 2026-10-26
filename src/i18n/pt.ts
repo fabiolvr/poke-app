@@ -52,6 +52,8 @@ export const pt = {
     unfavorite: 'Remover dos favoritos',
     compare: 'Comparar status',
     shiny: 'Shiny',
+    cry: 'Ouvir o grito',
+    cryLabel: 'Grito',
     data: 'DADOS',
     height: 'Altura',
     weight: 'Peso',
@@ -115,7 +117,7 @@ export const pt = {
     cancel: 'Cancelar',
     about: 'SOBRE',
     version: 'Poke App · versão {{version}}',
-    credits: 'Dados e imagens da PokéAPI.',
+    credits: 'Dados e imagens da PokéAPI. Gritos do Pokémon Showdown.',
     openPokeApi: 'Abrir pokeapi.co',
     trademark:
       'Pokémon e nomes relacionados são marcas da Nintendo, Game Freak e The Pokémon Company. Projeto pessoal, sem fins comerciais.',

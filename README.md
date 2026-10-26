@@ -46,7 +46,7 @@ Bordas grossas, sombras duras e cores chapadas, com os dados da [PokéAPI](https
 
 - 📖 **Pokédex** em grade com as 1.025 espécies, carregada de 30 em 30 enquanto você rola. Puxar para baixo recarrega.
 - 🔎 **Busca por nome ou número** (`25` ou `#0025`) e 🏷️ **filtro por tipo**, numa folha que sobe da parte de baixo da tela. Os dois funcionam juntos.
-- 📊 **Detalhes** com arte oficial (e a versão ✨ shiny num toque), tipos, descrição, altura e peso, status base em barras, habilidades e 🥊 **golpes** do jogo mais recente em que o Pokémon aparece, separados por nível, MT, ovo e tutor.
+- 📊 **Detalhes** com arte oficial (e a versão ✨ shiny num toque), 🔊 grito do Pokémon, tipos, descrição, altura e peso, status base em barras, habilidades e 🥊 **golpes** do jogo mais recente em que o Pokémon aparece, separados por nível, MT, ovo e tutor.
 - 🛡️ **Fraquezas e resistências** nos detalhes: o dano que cada tipo de golpe causa (4×, 2×, ½×, ¼× e imunidade), somando os dois tipos do Pokémon. Vem de uma tabela no app, então funciona sem internet.
 - 🧬 **Linha evolutiva** com o que faz cada etapa evoluir (Nv. 16, Pedra da Água, Troca…).
 - 🎭 **Formas** de cada Pokémon nos detalhes: megaevoluções, formas regionais e Gigantamax, cada uma com tipos e status próprios.
@@ -66,6 +66,7 @@ Bordas grossas, sombras duras e cores chapadas, com os dados da [PokéAPI](https
 | 🌐 Idiomas | `i18next` + `react-i18next` com chaves tipadas · `expo-localization` para o idioma do aparelho |
 | 🧩 Componentes nativos | `@expo/ui` no campo de busca e na folha de tipos |
 | 💾 Persistência | `expo-sqlite/kv-store` para os favoritos e as respostas da PokéAPI (modo sem internet) · `expo-network` para saber se há conexão |
+| 🔊 Áudio | `expo-audio` para os gritos, em MP3 do Pokémon Showdown (os `.ogg` da PokéAPI não tocam no iOS) |
 | 🔤 Fontes | Archivo Black e Space Grotesk |
 | 🧪 Qualidade | ESLint + Prettier · TypeScript · Jest (unitários) · Maestro (E2E) · Reactotron (depuração) |
 
@@ -145,5 +146,5 @@ src/
 - 🌐 O app foi testado no iOS e no Android. A versão web não foi testada.
 
 <div align="center">
-<sub>Dados e imagens: <a href="https://pokeapi.co/">PokéAPI</a>. Pokémon e nomes relacionados são marcas da Nintendo, Game Freak e The Pokémon Company; este é um projeto pessoal, sem fins comerciais.</sub>
+<sub>Dados e imagens: <a href="https://pokeapi.co/">PokéAPI</a>. Gritos: <a href="https://play.pokemonshowdown.com/">Pokémon Showdown</a>. Pokémon e nomes relacionados são marcas da Nintendo, Game Freak e The Pokémon Company; este é um projeto pessoal, sem fins comerciais.</sub>
 </div>

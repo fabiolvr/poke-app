@@ -10,6 +10,7 @@ import { PokemonImage } from '@/components/pokemon-image';
 import { BrutalAccordion } from '@/components/brutal-accordion';
 import { BrutalBox } from '@/components/brutal-box';
 import { BrutalButton } from '@/components/brutal-button';
+import { CryButton } from '@/components/cry-button';
 import { EvolutionChain } from '@/components/evolution-chain';
 import { MoveList } from '@/components/move-list';
 import { PokemonForms } from '@/components/pokemon-forms';
@@ -26,6 +27,7 @@ import { useGetPokemonQuery, useGetPokemonSpeciesQuery } from '@/features/pokemo
 import {
   artworkUrl,
   capitalize,
+  cryUrls,
   dexLabel,
   formatName,
   formatHeight,
@@ -105,6 +107,7 @@ export default function PokemonDetailsScreen() {
             />
           </Pressable>
           <PokemonImage uri={artworkUrl(pokemon.id, isShiny)} style={styles.artwork} />
+          <CryButton uris={cryUrls(pokemon)} style={styles.cry} />
           <View style={styles.types}>
             {pokemon.types.map(({ type }, index) => (
               <TypeBadge key={type.name} type={type.name} tilt={index % 2 === 0 ? -3 : 3} />
@@ -181,6 +184,7 @@ const styles = StyleSheet.create({
   hero: { padding: 16, alignItems: 'center', gap: 12 },
   number: { position: 'absolute', top: -12, right: 12 },
   shiny: { position: 'absolute', top: -12, left: 12, zIndex: 1 },
+  cry: { position: 'absolute', bottom: -12, right: 12, zIndex: 1 },
   artwork: { width: 220, height: 220 },
   types: { flexDirection: 'row', gap: 10 },
   flavor: { fontFamily: Brutal.font.body, fontSize: 16, lineHeight: 23 },
