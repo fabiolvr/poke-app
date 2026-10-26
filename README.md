@@ -31,6 +31,11 @@ Bordas grossas, sombras duras e cores chapadas, com os dados da [PokéAPI](https
     <td align="center"><img src="docs/screenshots/comparacao.jpg" width="170" alt="Comparação entre Vaporeon e Jolteon"><br><sub><b>Comparar status</b></sub></td>
   </tr>
   <tr>
+    <td align="center"><img src="docs/screenshots/favoritos.jpg" width="170" alt="Aba Favoritos com quatro Pokémon"><br><sub><b>Favoritos</b></sub></td>
+    <td align="center"><img src="docs/screenshots/configuracoes.jpg" width="170" alt="Configurações de tema, idioma, dados salvos e sobre"><br><sub><b>Configurações</b></sub></td>
+    <td align="center"><img src="docs/screenshots/ingles.jpg" width="170" alt="Detalhes do Pikachu com o app em inglês"><br><sub><b>Em inglês</b></sub></td>
+  </tr>
+  <tr>
     <td align="center"><img src="docs/screenshots/tema-escuro.jpg" width="170" alt="Pokédex no tema escuro"><br><sub><b>Tema escuro</b></sub></td>
     <td align="center"><img src="docs/screenshots/sem-internet.jpg" width="170" alt="Pokédex sem internet, com o aviso acima das abas"><br><sub><b>Sem internet</b></sub></td>
     <td align="center"><img src="docs/screenshots/splash.jpg" width="170" alt="Splash amarela com a Poké Bola"><br><sub><b>Splash</b></sub></td>
@@ -84,7 +89,15 @@ O build usa o [EAS](https://docs.expo.dev/build/introduction/), configurado em `
 npx eas-cli@latest build -p android --profile preview --local
 ```
 
-Para instalar no emulador, arraste o `.apk` para a janela dele ou use `adb install arquivo.apk`. O identificador do app é `com.fabio.dev.pokeapp`, no Android e no iOS. Os arquivos gerados (`.apk`, `.aab`, `.ipa`) ficam fora do git.
+Para instalar no emulador, arraste o `.apk` para a janela dele ou use `adb install -r arquivo.apk`. O identificador do app é `com.fabio.dev.pokeapp`, no Android e no iOS. Os arquivos gerados (`.apk`, `.aab`, `.ipa`) ficam fora do git. O app abre no idioma do aparelho; dá para fixar português ou inglês nas Configurações.
+
+Se o Android disser que **ocorreu um problema ao instalar o pacote**:
+
+- desinstale a versão anterior: o Android não atualiza um app assinado com outra chave nem volta para um `versionCode` menor;
+- confira se o arquivo chegou inteiro (o tamanho tem que bater com o do Mac): envios por mensagem ou nuvem às vezes cortam o APK;
+- permita "Instalar apps desconhecidos" para o app que abriu o arquivo (Arquivos, Chrome, Drive).
+
+Pelo cabo, com a depuração USB ligada, o `adb install -r arquivo.apk` mostra o motivo exato.
 
 ## ✅ Antes de terminar uma mudança
 
@@ -111,7 +124,8 @@ src/
 ├─ app/            telas e navegação (Expo Router)
 │  ├─ (tabs)/      abas Pokédex e Favoritos
 │  ├─ pokemon/     detalhes: /pokemon/pikachu
-│  └─ compare.tsx  comparação: /compare?a=pikachu&b=raichu
+│  ├─ compare.tsx  comparação: /compare?a=pikachu&b=raichu
+│  └─ settings.tsx configurações: tema, idioma, dados salvos e sobre
 ├─ components/     peças visuais (BrutalBox, PokemonCard, SearchBar…)
 ├─ constants/      tokens do estilo e cores dos tipos
 ├─ features/
