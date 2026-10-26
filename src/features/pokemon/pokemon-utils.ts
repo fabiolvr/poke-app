@@ -18,8 +18,9 @@ const FIRST_ALTERNATE_FORM_ID = 10000;
 const ARTWORK_URL =
   'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork';
 
-export function artworkUrl(id: number) {
-  return `${ARTWORK_URL}/${id}.png`;
+// A versão shiny fica numa pasta ao lado, com o mesmo nome de arquivo.
+export function artworkUrl(id: number, shiny = false) {
+  return `${ARTWORK_URL}${shiny ? '/shiny' : ''}/${id}.png`;
 }
 
 // A URL termina com o id: https://pokeapi.co/api/v2/pokemon/25/

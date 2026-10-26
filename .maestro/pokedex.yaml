@@ -36,6 +36,16 @@ name: Pokédex, detalhes e favoritos
       - tapOn: "Favoritar"
 - assertVisible: "Remover dos favoritos"
 - takeScreenshot: .maestro/capturas/pokedex-02-detalhes
+# Shiny liga e desliga pelo adesivo no canto da arte.
+- tapOn: "Shiny"
+- assertVisible:
+    text: "Shiny"
+    checked: true
+- takeScreenshot: .maestro/capturas/pokedex-03-shiny
+- tapOn: "Shiny"
+- assertVisible:
+    text: "Shiny"
+    checked: false
 # Elétrico: só Terrestre é fraqueza.
 - scrollUntilVisible:
     element: "Fraqueza 2×: Terrestre"
@@ -61,10 +71,10 @@ name: Pokédex, detalhes e favoritos
 - scrollUntilVisible:
     element: "Thunderbolt"
     direction: DOWN
-- takeScreenshot: .maestro/capturas/pokedex-03-golpes
+- takeScreenshot: .maestro/capturas/pokedex-04-golpes
 - runFlow: subflows/voltar.yaml
 
 # Favoritos
 - tapOn: "Favoritos"
 - assertVisible: "Pikachu.*"
-- takeScreenshot: .maestro/capturas/pokedex-04-favoritos
+- takeScreenshot: .maestro/capturas/pokedex-05-favoritos

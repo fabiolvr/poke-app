@@ -46,7 +46,7 @@ Bordas grossas, sombras duras e cores chapadas, com os dados da [PokéAPI](https
 
 - 📖 **Pokédex** em grade com as 1.025 espécies, carregada de 30 em 30 enquanto você rola. Puxar para baixo recarrega.
 - 🔎 **Busca por nome ou número** (`25` ou `#0025`) e 🏷️ **filtro por tipo**, numa folha que sobe da parte de baixo da tela. Os dois funcionam juntos.
-- 📊 **Detalhes** com arte oficial, tipos, descrição, altura e peso, status base em barras, habilidades e 🥊 **golpes** do jogo mais recente em que o Pokémon aparece, separados por nível, MT, ovo e tutor.
+- 📊 **Detalhes** com arte oficial (e a versão ✨ shiny num toque), tipos, descrição, altura e peso, status base em barras, habilidades e 🥊 **golpes** do jogo mais recente em que o Pokémon aparece, separados por nível, MT, ovo e tutor.
 - 🛡️ **Fraquezas e resistências** nos detalhes: o dano que cada tipo de golpe causa (4×, 2×, ½×, ¼× e imunidade), somando os dois tipos do Pokémon. Vem de uma tabela no app, então funciona sem internet.
 - 🧬 **Linha evolutiva** com o que faz cada etapa evoluir (Nv. 16, Pedra da Água, Troca…).
 - 🎭 **Formas** de cada Pokémon nos detalhes: megaevoluções, formas regionais e Gigantamax, cada uma com tipos e status próprios.

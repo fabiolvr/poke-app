@@ -52,6 +52,7 @@ export const en: Translations = {
     favorite: 'Favorite',
     unfavorite: 'Remove from favorites',
     compare: 'Compare stats',
+    shiny: 'Shiny',
     data: 'DATA',
     height: 'Height',
     weight: 'Weight',

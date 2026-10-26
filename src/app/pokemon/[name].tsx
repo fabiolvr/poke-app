@@ -1,8 +1,9 @@
 import { skipToken } from '@reduxjs/toolkit/query';
 import * as Haptics from 'expo-haptics';
 import { router, Stack, useLocalSearchParams } from 'expo-router';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { PokemonImage } from '@/components/pokemon-image';
@@ -52,6 +53,7 @@ export default function PokemonDetailsScreen() {
   const { data: species } = useGetPokemonSpeciesQuery(pokemon?.species.name ?? skipToken);
   // A rota pode chegar com o id (vindo da linha evolutiva); o favorito é guardado pelo nome.
   const isFavorite = useAppSelector((state) => selectIsFavorite(state, pokemon?.name ?? name));
+  const [isShiny, setIsShiny] = useState(false);
 
   if (isLoading) {
     return <ScreenMessage text={t('common.loading')} />;
@@ -76,6 +78,11 @@ export default function PokemonDetailsScreen() {
     dispatch(toggleFavorite(summary));
   };
 
+  const handleToggleShiny = () => {
+    Haptics.selectionAsync();
+    setIsShiny((shiny) => !shiny);
+  };
+
   return (
     <>
       <Stack.Screen options={{ title: formatName(pokemon).toUpperCase() }} />
@@ -84,7 +91,20 @@ export default function PokemonDetailsScreen() {
         contentContainerStyle={[styles.content, { paddingBottom: Brutal.gap * 2 + insets.bottom }]}>
         <BrutalBox color={mainType.fill} style={styles.hero}>
           <Sticker label={dexLabel(pokemon, language)} color={theme.white} style={styles.number} />
-          <PokemonImage uri={summary.imageUrl} style={styles.artwork} />
+          <Pressable
+            accessibilityRole="switch"
+            accessibilityLabel={t('details.shiny')}
+            accessibilityState={{ checked: isShiny }}
+            onPress={handleToggleShiny}
+            hitSlop={8}
+            style={styles.shiny}>
+            <Sticker
+              label={`✨ ${t('details.shiny').toUpperCase()}`}
+              color={isShiny ? theme.pink : theme.white}
+              tilt={3}
+            />
+          </Pressable>
+          <PokemonImage uri={artworkUrl(pokemon.id, isShiny)} style={styles.artwork} />
           <View style={styles.types}>
             {pokemon.types.map(({ type }, index) => (
               <TypeBadge key={type.name} type={type.name} tilt={index % 2 === 0 ? -3 : 3} />
@@ -160,6 +180,7 @@ const styles = StyleSheet.create({
   content: { padding: Brutal.gap, paddingTop: Brutal.gap + 12, gap: Brutal.gap },
   hero: { padding: 16, alignItems: 'center', gap: 12 },
   number: { position: 'absolute', top: -12, right: 12 },
+  shiny: { position: 'absolute', top: -12, left: 12, zIndex: 1 },
   artwork: { width: 220, height: 220 },
   types: { flexDirection: 'row', gap: 10 },
   flavor: { fontFamily: Brutal.font.body, fontSize: 16, lineHeight: 23 },

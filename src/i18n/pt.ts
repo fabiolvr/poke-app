@@ -51,6 +51,7 @@ export const pt = {
     favorite: 'Favoritar',
     unfavorite: 'Remover dos favoritos',
     compare: 'Comparar status',
+    shiny: 'Shiny',
     data: 'DADOS',
     height: 'Altura',
     weight: 'Peso',

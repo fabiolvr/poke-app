@@ -1,6 +1,7 @@
 import { describe, expect, it } from '@jest/globals';
 
 import {
+  artworkUrl,
   dexLabel,
   describeEvolution,
   flattenChain,
@@ -55,6 +56,12 @@ describe('ids e resumo', () => {
       imageUrl:
         'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png',
     });
+  });
+
+  it('a versão shiny fica na pasta shiny', () => {
+    expect(artworkUrl(25, true)).toBe(
+      'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/25.png',
+    );
   });
 
   it('separa espécies (até 9999) de formas alternativas (10000 em diante)', () => {
