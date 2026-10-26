@@ -4,7 +4,7 @@ name: Formas alternativas nos detalhes
 - runFlow: subflows/abrir-app.yaml
 
 # Charizard: Mega X é Fogo/Dragão, diferente da forma padrão.
-- tapOn: "Buscar por nome"
+- tapOn: "Buscar por nome ou número"
 - inputText: "charizard"
 - hideKeyboard:
     optional: true
@@ -28,7 +28,7 @@ name: Formas alternativas nos detalhes
 
 # Raichu de Alola: Elétrico/Psíquico.
 - runFlow: subflows/abrir-app.yaml
-- tapOn: "Buscar por nome"
+- tapOn: "Buscar por nome ou número"
 - inputText: "raichu"
 - hideKeyboard:
     optional: true

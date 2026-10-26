@@ -12,11 +12,11 @@ name: Configurações de tema e idioma
 - assertVisible: "THEME"
 - takeScreenshot: .maestro/capturas/configuracoes-01-ingles-escuro
 - runFlow: subflows/voltar.yaml
-- assertVisible: "Search by name"
+- assertVisible: "Search by name or number"
 
 # Reaberto, o app continua em inglês; os tipos usam os nomes da API.
 - runFlow: subflows/abrir-app.yaml
-- assertVisible: "Search by name"
+- assertVisible: "Search by name or number"
 - tapOn: "Filter by type"
 - tapOn: "Fire type"
 - assertVisible: "Remove Fire filter"

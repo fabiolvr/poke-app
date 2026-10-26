@@ -23,7 +23,7 @@ export const en: Translations = {
     loading: 'Loading the Pokédex…',
     error: 'Could not load the Pokédex. Check your connection.',
     offlineError: 'No internet, and this list has not been opened on this device yet.',
-    search: 'Search by name',
+    search: 'Search by name or number',
     filter: 'Filter by type',
     changeType: 'Change type',
     removeFilter: 'Remove {{type}} filter',

@@ -22,7 +22,7 @@ export const pt = {
     loading: 'Carregando a Pokédex…',
     error: 'Não foi possível carregar a Pokédex. Confira sua conexão.',
     offlineError: 'Sem internet, e esta lista ainda não foi aberta neste aparelho.',
-    search: 'Buscar por nome',
+    search: 'Buscar por nome ou número',
     filter: 'Filtrar por tipo',
     changeType: 'Trocar tipo',
     removeFilter: 'Remover filtro {{type}}',

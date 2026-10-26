@@ -22,7 +22,7 @@ name: Vídeo de demonstração (parte 1, Pokédex em português e tema claro)
     visible: "PAUSA_DEMO"
     timeout: 1200
     optional: true
-- tapOn: "Buscar por nome"
+- tapOn: "Buscar por nome ou número"
 - extendedWaitUntil:
     visible: "PAUSA_DEMO"
     timeout: 500

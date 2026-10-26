@@ -4,7 +4,7 @@ name: Busca, filtro por tipo, evoluções e comparação
 - runFlow: subflows/abrir-app.yaml
 
 # Busca por nome. Esconder o teclado é opcional: com o teclado do Mac ligado ao simulador, não há teclado na tela.
-- tapOn: "Buscar por nome"
+- tapOn: "Buscar por nome ou número"
 - inputText: "char"
 - assertVisible: "Charmander.*"
 - assertVisible: "Charizard.*"
@@ -24,12 +24,21 @@ name: Busca, filtro por tipo, evoluções e comparação
 - tapOn: "Limpar busca"
 - assertVisible: "Bulbasaur.*"
 
+# Busca por número: "25" é só o Pikachu, sem o #0250 Ho-Oh nem o #0002 Ivysaur.
+- tapOn: "Buscar por nome ou número"
+- inputText: "25"
+- assertVisible: "Pikachu, número 25.*"
+- assertNotVisible: "Ho-oh.*"
+- assertNotVisible: "Ivysaur.*"
+- tapOn: "Limpar busca"
+- assertVisible: "Bulbasaur.*"
+
 # Linha evolutiva. O rótulo completo evita acertar o campo de busca, que também contém "eevee".
-- tapOn: "Buscar por nome"
+- tapOn: "Buscar por nome ou número"
 - inputText: "eevee"
 - hideKeyboard:
     optional: true
-- tapOn: "Eevee, número 133"
+- tapOn: "Eevee, número 133.*"
 - scrollUntilVisible:
     element: "Vaporeon.*"
     direction: DOWN

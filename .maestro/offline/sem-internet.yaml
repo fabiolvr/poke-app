@@ -34,11 +34,11 @@ name: Sem internet
 - assertNotVisible: "Sem internet, e esta lista.*"
 
 # Busca (lista completa salva) e detalhes com linha evolutiva.
-- tapOn: "Buscar por nome"
+- tapOn: "Buscar por nome ou número"
 - inputText: "eevee"
 - hideKeyboard:
     optional: true
-- tapOn: "Eevee, número 133"
+- tapOn: "Eevee, número 133.*"
 - scrollUntilVisible:
     element: "Vaporeon.*"
     direction: DOWN

@@ -68,9 +68,15 @@ export function formLabel(varietyName: string, speciesName: string, language: La
   );
 }
 
+// Só dígitos (com ou sem "#" e zeros à esquerda, como "#0025") buscam o número exato.
+const DEX_NUMBER_QUERY = /^#?\d+$/;
+
 // Os nomes da API são minúsculos e usam hífen no lugar de espaço ("mr-mime").
 export function matchesQuery(pokemon: PokemonSummary, query: string) {
   const normalized = query.trim().toLowerCase().replace(/\s+/g, '-');
+  if (DEX_NUMBER_QUERY.test(normalized)) {
+    return pokemon.id === Number(normalized.replace('#', ''));
+  }
   return normalized === '' || pokemon.name.includes(normalized);
 }
 

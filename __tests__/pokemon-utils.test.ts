@@ -118,6 +118,17 @@ describe('busca', () => {
   it('recusa o que não faz parte do nome', () => {
     expect(matchesQuery(pikachu, 'raichu')).toBe(false);
   });
+
+  it('busca pelo número exato, com ou sem # e zeros à esquerda', () => {
+    expect(matchesQuery(pikachu, '25')).toBe(true);
+    expect(matchesQuery(pikachu, '#0025')).toBe(true);
+    expect(matchesQuery(pikachu, ' 025 ')).toBe(true);
+  });
+
+  it('não confunde parte do número com o número', () => {
+    expect(matchesQuery(pikachu, '2')).toBe(false);
+    expect(matchesQuery(pikachu, '250')).toBe(false);
+  });
 });
 
 describe('evoluções', () => {
