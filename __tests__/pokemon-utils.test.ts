@@ -11,6 +11,7 @@ import {
   formatWeight,
   formLabel,
   idFromUrl,
+  intersectById,
   isDexEntry,
   matchesQuery,
   pickFlavorText,
@@ -128,6 +129,23 @@ describe('gritos', () => {
       cry('charizard-megax'),
       cry('charizard'),
     ]);
+  });
+});
+
+describe('dois tipos', () => {
+  const summary = (name: string, id: number) => ({ id, name, imageUrl: '' });
+  const fire = [summary('charmander', 4), summary('charizard', 6), summary('moltres', 146)];
+  const flying = [summary('charizard', 6), summary('pidgey', 16), summary('moltres', 146)];
+
+  it('fica só com os que têm os dois tipos, na ordem do primeiro', () => {
+    expect(intersectById([fire, flying]).map((pokemon) => pokemon.name)).toEqual([
+      'charizard',
+      'moltres',
+    ]);
+  });
+
+  it('com um tipo só, devolve a lista inteira', () => {
+    expect(intersectById([fire])).toEqual(fire);
   });
 });
 

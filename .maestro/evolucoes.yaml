@@ -14,14 +14,40 @@ name: Busca, filtro por tipo, evoluções e comparação
 - takeScreenshot: .maestro/capturas/evolucoes-01-busca
 
 # Filtro por tipo, combinado com a busca
-- tapOn: "Filtrar por tipo"
-- assertVisible: "FILTRAR POR TIPO"
-- takeScreenshot: .maestro/capturas/evolucoes-02-folha-tipos
+- tapOn: "Filtrar"
+- assertVisible: "FILTRAR"
+- takeScreenshot: .maestro/capturas/evolucoes-02-folha-filtros
 - tapOn: "Tipo Fogo"
+- tapOn: "Ver resultados"
 - assertVisible: "Remover filtro Fogo"
 - assertVisible: "Charmander.*"
 - tapOn: "Remover filtro Fogo"
 - tapOn: "Limpar busca"
+- assertVisible: "Bulbasaur.*"
+
+# Dois tipos: Fogo e Voador é o Charizard, não o Charmander.
+- tapOn: "Filtrar"
+- tapOn: "Tipo Fogo"
+- tapOn: "Tipo Voador"
+# Com dois tipos, os outros ficam desligados.
+- assertVisible:
+    text: "Tipo Água"
+    enabled: false
+- tapOn: "Ver resultados"
+- assertVisible: "Charizard.*"
+- assertNotVisible: "Charmander.*"
+- tapOn: "Remover filtro Fogo"
+- tapOn: "Remover filtro Voador"
+
+# Geração: Johto começa no Chikorita (#0152).
+- tapOn: "Filtrar"
+- tapOn: "Geração 2, Johto"
+- tapOn: "Ver resultados"
+- assertVisible: "Remover filtro Johto"
+- assertVisible: "Chikorita.*"
+- assertNotVisible: "Bulbasaur.*"
+- takeScreenshot: .maestro/capturas/evolucoes-03-geracao
+- tapOn: "Remover filtro Johto"
 - assertVisible: "Bulbasaur.*"
 
 # Busca por número: "25" é só o Pikachu, sem o #0250 Ho-Oh nem o #0002 Ivysaur.
@@ -43,7 +69,7 @@ name: Busca, filtro por tipo, evoluções e comparação
     element: "Vaporeon.*"
     direction: DOWN
     visibilityPercentage: 50
-- takeScreenshot: .maestro/capturas/evolucoes-03-linha-evolutiva
+- takeScreenshot: .maestro/capturas/evolucoes-04-linha-evolutiva
 - tapOn: "Vaporeon.*"
 - assertVisible: "Água"
 
@@ -61,4 +87,4 @@ name: Busca, filtro por tipo, evoluções e comparação
 - scrollUntilVisible:
     element: "Empate: os dois somam 525."
     direction: DOWN
-- takeScreenshot: .maestro/capturas/evolucoes-04-comparacao
+- takeScreenshot: .maestro/capturas/evolucoes-05-comparacao

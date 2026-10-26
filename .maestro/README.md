@@ -5,7 +5,7 @@ Os fluxos rodam no Expo Go, com o servidor ligado (`yarn expo start`).
 | Fluxo | O que cobre |
 | --- | --- |
 | `pokedex.yaml` | Grade com paginação, detalhes do Pikachu, shiny, grito, fraquezas e resistências, favoritar, habilidades, golpes por nível e MT e aba Favoritos |
-| `evolucoes.yaml` | Busca por nome, filtro por tipo, linha evolutiva do Eevee e comparação Vaporeon × Jolteon |
+| `evolucoes.yaml` | Busca por nome e por número, filtro por um e por dois tipos, filtro por geração, linha evolutiva do Eevee e comparação Vaporeon × Jolteon |
 | `formas.yaml` | Formas do Charizard (Mega X é Fogo/Dragão) e Raichu de Alola (Elétrico/Psíquico) |
 | `configuracoes.yaml` | Tema escuro e inglês na hora, mantidos ao reabrir o app, e volta para Sistema no fim |
 
@@ -54,7 +54,7 @@ networksetup -setairportpower en1 on
 
 ## Vídeo de demonstração
 
-`demo/gravar-video.sh` grava o passeio pelo app no simulador do iOS e corta as pausas com `demo/cortar-pausas.py`. Requer `ffmpeg`. Primeiro a Pokédex em português e no tema claro: busca, filtro por tipo, formas, evoluções, comparação e favoritos. Depois as configurações trocam para o tema escuro e o inglês. No fim, o script devolve o tema e o idioma para Sistema.
+`demo/gravar-video.sh` grava o passeio pelo app no simulador do iOS e corta as pausas com `demo/cortar-pausas.py`. Requer `ffmpeg`. Primeiro a Pokédex em português e no tema claro: busca, filtros, formas, evoluções, comparação e favoritos. Depois as configurações trocam para o tema escuro e o inglês. No fim, o script devolve o tema e o idioma para Sistema.
 
 ```bash
 .maestro/demo/gravar-video.sh            # salva em ~/Documents/poke-app-demo-ios.mp4

@@ -90,6 +90,13 @@ export function formLabel(varietyName: string, speciesName: string, language: La
 // Só dígitos (com ou sem "#" e zeros à esquerda, como "#0025") buscam o número exato.
 const DEX_NUMBER_QUERY = /^#?\d+$/;
 
+// Só os Pokémon que estão em todas as listas, na ordem da primeira (ex.: Fogo e Voador).
+export function intersectById(lists: PokemonSummary[][]) {
+  const [first = [], ...rest] = lists;
+  const others = rest.map((list) => new Set(list.map((pokemon) => pokemon.id)));
+  return first.filter((pokemon) => others.every((ids) => ids.has(pokemon.id)));
+}
+
 // Os nomes da API são minúsculos e usam hífen no lugar de espaço ("mr-mime").
 export function matchesQuery(pokemon: PokemonSummary, query: string) {
   const normalized = query.trim().toLowerCase().replace(/\s+/g, '-');

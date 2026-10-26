@@ -17,8 +17,9 @@ name: Configurações de tema e idioma
 # Reaberto, o app continua em inglês; os tipos usam os nomes da API.
 - runFlow: subflows/abrir-app.yaml
 - assertVisible: "Search by name or number"
-- tapOn: "Filter by type"
+- tapOn: "Filter"
 - tapOn: "Fire type"
+- tapOn: "Show results"
 - assertVisible: "Remove Fire filter"
 - tapOn: "Remove Fire filter"
 - tapOn: "Favorites"

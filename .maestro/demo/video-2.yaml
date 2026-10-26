@@ -35,12 +35,13 @@ name: Vídeo de demonstração (parte 2, configurações com tema escuro e ingl�
     visible: "PAUSA_DEMO"
     timeout: 2000
     optional: true
-- tapOn: "Filter by type"
+- tapOn: "Filter"
 - extendedWaitUntil:
     visible: "PAUSA_DEMO"
     timeout: 1500
     optional: true
 - tapOn: "Water type"
+- tapOn: "Show results"
 - extendedWaitUntil:
     visible: "PAUSA_DEMO"
     timeout: 2500

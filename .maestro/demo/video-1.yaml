@@ -34,12 +34,13 @@ name: Vídeo de demonstração (parte 1, Pokédex em português e tema claro)
     visible: "PAUSA_DEMO"
     timeout: 2500
     optional: true
-- tapOn: "Filtrar por tipo"
+- tapOn: "Filtrar"
 - extendedWaitUntil:
     visible: "PAUSA_DEMO"
     timeout: 2500
     optional: true
 - tapOn: "Tipo Fogo"
+- tapOn: "Ver resultados"
 - extendedWaitUntil:
     visible: "PAUSA_DEMO"
     timeout: 2500

@@ -63,12 +63,14 @@ name: Sem internet
 - tapOn: "Limpar busca"
 
 # Tipo já aberto (Fogo) vem da cópia; tipo nunca aberto (Gelo) mostra a mensagem.
-- tapOn: "Filtrar por tipo"
+- tapOn: "Filtrar"
 - tapOn: "Tipo Fogo"
+- tapOn: "Ver resultados"
 - assertVisible: "Charmander.*"
 - tapOn: "Remover filtro Fogo"
-- tapOn: "Filtrar por tipo"
+- tapOn: "Filtrar"
 - tapOn: "Tipo Gelo"
+- tapOn: "Ver resultados"
 - assertVisible: "Sem internet, e esta lista ainda não foi aberta neste aparelho."
 - takeScreenshot: .maestro/capturas/offline-04-tipo-nao-salvo
 - tapOn: "Remover filtro Gelo"
